@@ -176,7 +176,7 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
 
     // INTERVALO: glitch cada 2–4 segundos al azar
     glitchTimer += dt;
-    if (!isGlitching && glitchTimer > 2.0 + Math.random() * 2.0) {
+    if (!isGlitching && glitchTimer > 10.0 + Math.random() * 5.0) {
       triggerGlitch();
     }
 
