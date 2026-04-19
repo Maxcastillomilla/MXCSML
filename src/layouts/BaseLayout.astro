@@ -1,0 +1,65 @@
+---
+// ─────────────────────────────────────────────────────────────────────────────
+// BASE LAYOUT
+// El "esqueleto" HTML que envuelve TODAS las páginas del sitio.
+// Incluye: <head> con fuentes y SEO, Navbar, Footer, y el <slot /> donde
+// cada página inyecta su contenido.
+//
+// Para usarlo en una página nueva:
+//   import BaseLayout from '../layouts/BaseLayout.astro';
+//   <BaseLayout title="Mi página">...contenido...</BaseLayout>
+// ─────────────────────────────────────────────────────────────────────────────
+import { ClientRouter } from 'astro:transitions'; // Habilita animaciones de transición entre páginas
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Computational design researcher and architect.' } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="generator" content={Astro.generator} />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+
+  <!-- Habilita las view transitions (animación morph al navegar entre tarjeta → proyecto) -->
+  <ClientRouter />
+
+  <!-- Fuentes de Google:
+       Syne (body) — geométrica con carácter propio, más distintiva que Inter
+       JetBrains Mono (labels, código) — legibilidad técnica
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <Navbar />
+  <main>
+    <!-- Aquí se inyecta el contenido de cada página -->
+    <slot />
+  </main>
+  <Footer />
+
+  <script>
+    // Fix para navegación con hash (ej: /#projects).
+    // Cuando Astro hace una transición de página, el scroll se pierde.
+    // Este script lo restaura automáticamente después del swap.
+    document.addEventListener('astro:after-swap', () => {
+      const hash = location.hash;
+      if (hash) {
+        const el = document.querySelector(hash);
+        el?.scrollIntoView({ behavior: 'instant' });
+      }
+    });
+  </script>
+</body>
+</html>

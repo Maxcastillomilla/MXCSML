@@ -1,0 +1,28 @@
+---
+import ProjectGrid from './ProjectGrid.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  projects: CollectionEntry<'projects'>[];
+  allTags: string[];
+}
+
+const { projects, allTags } = Astro.props;
+---
+<section id="projects" class="bg-[#f8f7f5]">
+
+  <!-- Swiss Grid section header -->
+  <div style="display: grid; grid-template-columns: repeat(5, 1fr);">
+    <div style="outline: 1px solid #c2c2c2; padding: 1.5rem 1.25rem; display: flex; align-items: flex-end;">
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(26,26,26,0.4);">(03)</span>
+    </div>
+    <div style="outline: 1px solid #c2c2c2; grid-column: span 3; padding: 1.5rem 1.25rem; display: flex; align-items: flex-end; background: #c0fc04;">
+      <span style="font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.15em; color: #1a1a1a;">Selected Work</span>
+    </div>
+    <div style="outline: 1px solid #c2c2c2; background: #1a1a1a;"></div>
+  </div>
+
+  <!-- Grid content -->
+  <ProjectGrid projects={projects} allTags={allTags} />
+
+</section>

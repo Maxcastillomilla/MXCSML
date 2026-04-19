@@ -1,0 +1,121 @@
+---
+// ─────────────────────────────────────────────────────────────────────────────
+// ABOUT
+// Sección breve de perfil personal — entre el hero y los proyectos.
+// Sigue el mismo lenguaje visual Swiss de grilla que el resto del sitio.
+//
+// Estructura:
+//   - Header de grilla con número de sección (02) y label
+//   - Columna izquierda: texto de presentación
+//   - Columna derecha: credenciales + herramientas en lista mono
+// ─────────────────────────────────────────────────────────────────────────────
+---
+
+<section id="about" class="bg-[#f8f7f5]">
+
+  <!-- Header de sección — mismo patrón que Projects y Contact -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid #c2c2c2;">
+    <div style="outline:1px solid #c2c2c2;padding:1.5rem 1.25rem;display:flex;align-items:flex-end;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:rgba(26,26,26,0.3);">(02)</span>
+    </div>
+    <div style="outline:1px solid #c2c2c2;grid-column:span 3;padding:1.5rem 1.25rem;display:flex;align-items:flex-end;background:#3601fb;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:#fff;">About</span>
+    </div>
+    <div style="outline:1px solid #c2c2c2;background:#1a1a1a;"></div>
+  </div>
+
+  <!-- Contenido principal: dos columnas -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;outline:1px solid #c2c2c2;" class="about-grid">
+
+    <!-- Columna izquierda: texto de perfil -->
+    <div style="outline:1px solid #c2c2c2;padding:3rem 2.5rem;">
+      <p style="font-size:1.35rem;font-weight:300;line-height:1.75;color:#1a1a1a;max-width:38ch;">
+        Designer and researcher working at the intersection of robotic fabrication,
+        computational geometry, and architectural systems.
+      </p>
+      <p style="font-size:0.9rem;font-weight:300;line-height:1.8;color:rgba(26,26,26,0.65);margin-top:1.5rem;max-width:44ch;">
+        Master's in Innovation and Design from Universidad Adolfo Ibáñez.
+        Currently enrolled in the <strong style="font-weight:500;color:#1a1a1a;">MRAC01 2025–2026</strong>
+        program at IAAC, Barcelona — exploring advanced construction workflows
+        through robotics, parametric design, and machine learning.
+      </p>
+      <p style="font-size:0.9rem;font-weight:300;line-height:1.8;color:rgba(26,26,26,0.65);margin-top:1rem;max-width:44ch;">
+        Experienced educator in digital fabrication and immersive media tools
+        across Chilean universities. Focused on bridging design practice
+        with emerging technology.
+      </p>
+    </div>
+
+    <!-- Columna derecha: credenciales + herramientas -->
+    <div style="outline:1px solid #c2c2c2;padding:3rem 2.5rem;display:flex;flex-direction:column;gap:2.5rem;">
+
+      <!-- Credenciales destacadas -->
+      <div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.18em;color:rgba(26,26,26,0.35);display:block;margin-bottom:1rem;">Credentials</span>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.65rem;">
+          <!-- Formación -->
+          <li style="display:flex;align-items:baseline;gap:0.75rem;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:rgba(26,26,26,0.3);">01</span>
+            <span style="font-size:0.85rem;font-weight:400;color:#1a1a1a;">
+              MRAC01 · IAAC Barcelona · 2025–2026
+              <span style="font-family:'JetBrains Mono',monospace;font-size:0.55rem;text-transform:uppercase;letter-spacing:0.1em;color:#ea027e;margin-left:0.5rem;">In Progress</span>
+            </span>
+          </li>
+          <li style="display:flex;align-items:baseline;gap:0.75rem;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:rgba(26,26,26,0.3);">02</span>
+            <span style="font-size:0.85rem;font-weight:400;color:#1a1a1a;">M.Sc. Innovation &amp; Design · UAI · 2021</span>
+          </li>
+          <!-- Certificaciones -->
+          <li style="display:flex;align-items:baseline;gap:0.75rem;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:rgba(26,26,26,0.3);">03</span>
+            <span style="font-size:0.85rem;font-weight:400;color:#1a1a1a;">Unreal Authorized Instructor · 2025</span>
+          </li>
+          <li style="display:flex;align-items:baseline;gap:0.75rem;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:rgba(26,26,26,0.3);">04</span>
+            <span style="font-size:0.85rem;font-weight:400;color:#1a1a1a;">Meta Creator · 2023</span>
+          </li>
+          <!-- Experiencia docente / investigación -->
+          <li style="display:flex;align-items:baseline;gap:0.75rem;margin-top:0.4rem;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:rgba(26,26,26,0.3);">05</span>
+            <span style="font-size:0.85rem;font-weight:400;color:#1a1a1a;">Lecturer · UCT · Visual Representation</span>
+          </li>
+          <li style="display:flex;align-items:baseline;gap:0.75rem;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:rgba(26,26,26,0.3);">06</span>
+            <span style="font-size:0.85rem;font-weight:400;color:#1a1a1a;">Lecturer · Universidad Mayor · Digital Animation</span>
+          </li>
+          <li style="display:flex;align-items:baseline;gap:0.75rem;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:rgba(26,26,26,0.3);">07</span>
+            <span style="font-size:0.85rem;font-weight:400;color:#1a1a1a;">FabLab Assistant · UAI</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Herramientas / skills técnicos -->
+      <div>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.18em;color:rgba(26,26,26,0.35);display:block;margin-bottom:1rem;">Tools &amp; Skills</span>
+        <div style="display:flex;flex-wrap:wrap;gap:0.4rem;">
+          {[
+            'Python','Grasshopper','Rhinoceros','Robotic Fabrication',
+            'Unreal Engine','Fusion 360','JavaScript','Photoshop',
+            'Illustrator','InDesign',
+          ].map(skill => (
+            <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.65rem;background:#1a1a1a;color:#f8f7f5;">
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- Responsive mobile: las dos columnas pasan a una -->
+<style>
+  @media (max-width: 767px) {
+    .about-grid {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>

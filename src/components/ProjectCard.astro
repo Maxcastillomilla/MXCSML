@@ -1,0 +1,124 @@
+---
+// ─────────────────────────────────────────────────────────────────────────────
+// PROJECT CARD
+// Tarjeta individual de un proyecto. Tiene dos variantes:
+//
+//   wide=true  → Layout HORIZONTAL (imagen izquierda 55%, texto derecha 45%)
+//                Solo en desktop. En mobile se vuelve vertical via CSS.
+//                Clases CSS: wide-card-link, wide-card-img, wide-card-content
+//
+//   wide=false → Layout VERTICAL (imagen arriba, texto abajo)
+//                Se usa para las tarjetas normales y en mobile para todas.
+//
+// El color de fondo del banner de tags viene del tag más relevante del proyecto.
+// transition:name habilita el morph animation al navegar a la página del proyecto.
+// ─────────────────────────────────────────────────────────────────────────────
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  wide?: boolean;
+}
+
+const { project, wide = false } = Astro.props;
+const { title, description, tags, cover } = project.data;
+
+// Color por categoría de tag — debe coincidir con TagFilter.astro y global.css
+const TAG_COLORS: Record<string, { bg: string; text: string }> = {
+  design:      { bg: '#c0fc04', text: '#1a1a1a' },
+  fabrication: { bg: '#ea027e', text: '#ffffff' },
+  research:    { bg: '#3601fb', text: '#ffffff' },
+  robotics:    { bg: '#1a1a1a', text: '#ffffff' },
+};
+const fallback = { bg: '#e8e7e5', text: '#1a1a1a' };
+
+// Color principal: el primer tag que tenga color definido
+const primary = tags.map(t => TAG_COLORS[t]).find(Boolean) ?? fallback;
+---
+
+{wide ? (
+  /* ── TARJETA WIDE (horizontal) ────────────────────────────────────────────
+     Layout: flex-row. Imagen ocupa 55% izquierda, contenido 45% derecha.
+     Las clases wide-card-* permiten el override a vertical en mobile (global.css).
+  ───────────────────────────────────────────────────────────────────────────── */
+  <a
+    href={`${import.meta.env.BASE_URL}projects/${project.id}`}
+    class="group wide-card-link"
+    style="text-decoration:none;color:inherit;display:flex;flex-direction:row;min-height:280px;height:100%;"
+  >
+    <!-- Imagen: posición absoluta para cubrir todo el contenedor -->
+    <div class="wide-card-img" style="flex:0 0 55%;overflow:hidden;background:#3a3a3a;position:relative;min-height:280px;">
+      <Image
+        src={cover}
+        alt={title}
+        width={800}
+        height={520}
+        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(100%);transition:filter 0.5s ease;"
+        class="group-hover:grayscale-0"
+        transition:name={`cover-${project.id}`}
+      />
+    </div>
+
+    <!-- Contenido: banner de tags arriba, título + descripción abajo -->
+    <div class="wide-card-content" style="flex:1;display:flex;flex-direction:column;min-width:0;">
+      <!-- Banner de color con los tags -->
+      <div style={`padding:0.5rem 1.25rem;background:${primary.bg};display:flex;flex-wrap:wrap;gap:0.4rem;align-items:center;flex-shrink:0;`}>
+        {tags.map(tag => {
+          const c = TAG_COLORS[tag] ?? fallback;
+          return <span style={`font-family:'JetBrains Mono',monospace;font-size:0.58rem;text-transform:uppercase;letter-spacing:0.13em;color:${c.text};`}>{tag}</span>;
+        })}
+      </div>
+      <!-- Título y descripción -->
+      <div style="padding:1.25rem;background:#f8f7f5;flex:1;display:flex;flex-direction:column;justify-content:center;">
+        <h3
+          style="font-size:1.05rem;font-weight:300;margin:0 0 0.5rem;line-height:1.3;color:#1a1a1a;transition:opacity 0.2s;"
+          class="group-hover:opacity-50"
+          transition:name={`title-${project.id}`}
+        >{title}</h3>
+        <p style="font-size:0.78rem;color:rgba(26,26,26,0.55);line-height:1.7;margin:0;">{description}</p>
+      </div>
+    </div>
+  </a>
+) : (
+  /* ── TARJETA NARROW (vertical) ────────────────────────────────────────────
+     Layout: flex-column. Imagen arriba (altura fija 200px), texto abajo.
+     También se usa en mobile para todas las tarjetas.
+  ───────────────────────────────────────────────────────────────────────────── */
+  <a
+    href={`${import.meta.env.BASE_URL}projects/${project.id}`}
+    class="group"
+    style="text-decoration:none;color:inherit;display:flex;flex-direction:column;height:100%;"
+  >
+    <!-- Contenedor de imagen con altura fija -->
+    <div style="position:relative;height:200px;overflow:hidden;background:#3a3a3a;flex-shrink:0;">
+      <Image
+        src={cover}
+        alt={title}
+        width={400}
+        height={300}
+        style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(100%);transition:filter 0.5s ease;"
+        class="group-hover:grayscale-0"
+        transition:name={`cover-${project.id}`}
+      />
+    </div>
+
+    <!-- Banner de tags -->
+    <div style={`padding:0.4rem 1rem;background:${primary.bg};display:flex;flex-wrap:wrap;gap:0.35rem;align-items:center;flex-shrink:0;`}>
+      {tags.map(tag => {
+        const c = TAG_COLORS[tag] ?? fallback;
+        return <span style={`font-family:'JetBrains Mono',monospace;font-size:0.55rem;text-transform:uppercase;letter-spacing:0.12em;color:${c.text};`}>{tag}</span>;
+      })}
+    </div>
+
+    <!-- Título y descripción (truncada a 3 líneas) -->
+    <div style="padding:0.85rem 1rem 1.25rem;background:#f8f7f5;flex:1;">
+      <h3
+        style="font-size:0.88rem;font-weight:300;margin:0 0 0.35rem;line-height:1.3;color:#1a1a1a;transition:opacity 0.2s;"
+        class="group-hover:opacity-50"
+        transition:name={`title-${project.id}`}
+      >{title}</h3>
+      <p style="font-size:0.75rem;color:rgba(26,26,26,0.55);line-height:1.6;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin:0;">{description}</p>
+    </div>
+  </a>
+)}

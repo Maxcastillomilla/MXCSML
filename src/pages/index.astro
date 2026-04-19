@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Projects from '../components/Projects.astro';
+import Contact from '../components/Contact.astro';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('projects', ({ data }) => data.status === 'published');
+const sorted = projects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const allTags = [...new Set(sorted.flatMap(p => p.data.tags))].sort();
+---
+<BaseLayout title="Max Castillo — Computational Design Researcher">
+  <Hero />
+  <About />
+  <Projects projects={sorted} allTags={allTags} />
+  <Contact />
+</BaseLayout>

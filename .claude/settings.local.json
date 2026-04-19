@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell.exe -Command '& { $env:PATH -split '\\\\'';'\\\\'' | ForEach-Object { if \\(Test-Path \"$_\\\\npm.cmd\"\\) { Write-Output $_ } }; \\(Get-Command npm -ErrorAction SilentlyContinue\\).Source }')"
+    ]
+  }
+}

@@ -1,0 +1,192 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   ESTILOS GLOBALES
+   Usa Tailwind CSS v4.
+   - Los colores del tema se definen en @theme {} y se pueden usar como clases
+     Tailwind: bg-ink, text-paper, bg-lime, etc.
+   - Las clases utilitarias de Tailwind (flex, grid, text-sm…) funcionan normal.
+   - Breakpoint principal: md = 768px. Menos de eso = mobile.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@import "tailwindcss";
+
+/* ── Paleta de colores del proyecto ─────────────────────────────────────────
+   Úsalos como: bg-ink, text-lime, bg-pink, etc.
+   O en inline styles como: color: #ea027e
+   ─────────────────────────────────────────────────────────────────────────── */
+@theme {
+  --color-ink:    #1a1a1a;   /* Negro principal — hero, footer, textos oscuros */
+  --color-paper:  #f8f7f5;   /* Blanco cálido — fondo de la sección proyectos */
+  --color-mist:   #e8e7e5;   /* Gris muy suave — bordes sutiles */
+  --color-ink-60: rgba(26, 26, 26, 0.6);
+  --color-ink-20: rgba(26, 26, 26, 0.2);
+  --color-ink-10: rgba(26, 26, 26, 0.1);
+
+  /* Colores de acento (uno por categoría de tag) */
+  --color-lime:  #c0fc04;   /* Verde lima  → tag "design" */
+  --color-pink:  #ea027e;   /* Rosa fuchsia → tag "fabrication" */
+  --color-blue:  #3601fb;   /* Azul eléctrico → tag "research" */
+  /* "robotics" usa --color-ink (#1a1a1a) */
+
+  --font-family-sans: 'Syne', system-ui, sans-serif;  /* Syne: más carácter que Inter */
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth; /* Animación suave al hacer click en links tipo /#projects */
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-family-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* ── Animación de tarjetas al filtrar por tag ────────────────────────────────
+   "hidden-card" se agrega/quita por tag-filter.ts.
+   Debe estar DESPUÉS de .project-card.revealed en el CSS para poder overridearlo.
+   ─────────────────────────────────────────────────────────────────────────── */
+.project-card.hidden-card {
+  opacity: 0 !important;
+  transform: translateY(8px) !important;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease !important;
+}
+
+/* ── Estilos del contenido Markdown (páginas de proyecto) ────────────────────
+   La clase "prose" envuelve el <slot /> en ProjectLayout.astro.
+   Aquí se sobreescribe el estilo por defecto para mantener la tipografía limpia.
+   ─────────────────────────────────────────────────────────────────────────── */
+.prose h2 {
+  font-weight: 300;
+  font-size: 1.5rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  color: var(--color-ink);
+}
+
+.prose h3 {
+  font-weight: 400;
+  font-size: 1.125rem;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose p {
+  line-height: 1.8;
+  color: rgba(26, 26, 26, 0.8);
+}
+
+.prose img {
+  width: 100%;
+  height: auto;
+}
+
+/* ── Grain / ruido sobre la sección de proyectos ─────────────────────────────
+   Pseudo-elemento con SVG noise encima del fondo paper.
+   Opacity muy baja (0.035) — apenas perceptible pero añade tacto editorial.
+   pointer-events:none para que no bloquee clicks.
+   ─────────────────────────────────────────────────────────────────────────── */
+#projects {
+  position: relative;
+}
+
+#projects::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+/* Asegurar que el contenido de proyectos esté sobre el grain */
+#projects > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Scroll reveal — tarjetas de proyecto ────────────────────────────────────
+   Las tarjetas empiezan invisibles y aparecen al entrar al viewport.
+   El Intersection Observer en ProjectGrid.astro agrega la clase 'revealed'.
+   ─────────────────────────────────────────────────────────────────────────── */
+.project-card {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.project-card.revealed {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+/* Respetar preferencia de movimiento reducido del sistema */
+@media (prefers-reduced-motion: reduce) {
+  .project-card {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Canvas del hero Three.js ────────────────────────────────────────────────
+   El <canvas> cubre toda la sección hero.
+   Lo monta ThreeScene.astro y lo inicializa three-hero.ts.
+   ─────────────────────────────────────────────────────────────────────────── */
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Responsive: Mobile (menos de 768px) ─────────────────────────────────────
+   Todo lo que cambia en pantalla de teléfono.
+   Las clases que se sobreescriben aquí están definidas en ProjectGrid.astro
+   y ProjectCard.astro.
+   ─────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  /* Todas las filas del grid pasan a 1 columna */
+  .projects-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* La fila de filtros y la de etiquetas decorativas ocupan todo el ancho */
+  .tag-filter-row,
+  .tag-label-row {
+    grid-column: 1 / -1 !important;
+  }
+
+  /* Cada tarjeta ocupa todo el ancho (sin span 2) */
+  .project-card {
+    grid-column: 1 / -1 !important;
+  }
+
+  /* La celda vacía decorativa desaparece en mobile (no tiene sentido en 1 col) */
+  .grid-empty-slot {
+    display: none !important;
+  }
+
+  /* La tarjeta "wide" (horizontal en desktop) se convierte en vertical en mobile */
+  .wide-card-link {
+    flex-direction: column !important;
+    min-height: auto !important;
+  }
+
+  .wide-card-img {
+    flex: none !important;
+    width: 100% !important;
+    height: 200px !important;
+    min-height: 200px !important;
+  }
+
+  .wide-card-content {
+    flex: 1 !important;
+    width: 100% !important;
+  }
+}

@@ -1,0 +1,142 @@
+---
+// ─────────────────────────────────────────────────────────────────────────────
+// PROJECT LAYOUT
+// Plantilla para las páginas individuales de cada proyecto (/projects/[slug]).
+// Recibe un objeto "project" (CollectionEntry) y renderiza:
+//   - Imagen de portada a pantalla completa
+//   - Título, descripción, tags, metadatos (año, lugar, colaboradores)
+//   - El contenido Markdown del archivo .md (via <slot />)
+//   - Botones "← Back" arriba y abajo
+//   - Sección "Related Work" con 2 proyectos aleatorios
+//
+// El componente es usado por src/pages/projects/[slug].astro
+// ─────────────────────────────────────────────────────────────────────────────
+import BaseLayout from './BaseLayout.astro';
+import RelatedProjects from '../components/RelatedProjects.astro';
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { title, description, tags, cover, year, location, collaborators } = project.data;
+
+// ── Proyectos relacionados ────────────────────────────────────────────────────
+// Se calculan en BUILD TIME (no en el browser), así que no hay costo en runtime.
+// Lógica: busca proyectos que comparten al menos 1 tag, los mezcla al azar,
+// y toma los primeros 2.
+const all = await getCollection('projects', ({ data }) => data.status === 'published');
+const candidates = all.filter(p => p.id !== project.id && p.data.tags.some(t => tags.includes(t)));
+
+// Fisher-Yates shuffle: mezcla aleatoria verdadera
+for (let i = candidates.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [candidates[i], candidates[j]] = [candidates[j], candidates[i]];
+}
+const related = candidates.slice(0, 2);
+---
+<BaseLayout title={`${title} — Portfolio`} description={description}>
+  <article>
+
+    <!-- ── Portada del proyecto ──────────────────────────────────────────────
+         transition:name conecta la imagen de la tarjeta con esta imagen via
+         View Transition (animación morph al hacer click en la tarjeta).
+         El nombre debe coincidir con el de ProjectCard.astro: cover-{id}
+    ───────────────────────────────────────────────────────────────────────── -->
+    <div class="w-full h-[60vh] overflow-hidden bg-[#1a1a1a]">
+      <Image
+        src={cover}
+        alt={title}
+        width={1600}
+        height={900}
+        class="w-full h-full object-cover opacity-80"
+        transition:name={`cover-${project.id}`}
+      />
+    </div>
+
+    <!-- ── Contenido principal ───────────────────────────────────────────── -->
+    <div class="max-w-3xl mx-auto px-6 py-20">
+
+      <!-- Botón volver (arriba) -->
+      <a
+        href={`${import.meta.env.BASE_URL}#projects`}
+        class="inline-flex items-center gap-2 font-mono text-sm uppercase tracking-widest font-medium hover:opacity-70 transition-opacity mb-16"
+        style="color:#ea027e;"
+      >
+        ← Back
+      </a>
+
+      <!-- ── Encabezado: tags, título, descripción, metadatos ─────────────── -->
+      <header class="mb-16">
+
+        <!-- Tags como badges -->
+        <div class="flex flex-wrap gap-2 mb-6">
+          {tags.map(tag => (
+            <span class="font-mono text-xs uppercase tracking-widest border border-[rgba(26,26,26,0.2)] px-3 py-1 text-[rgba(26,26,26,0.6)]">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <!-- transition:name conecta con el título de la tarjeta (morph animation) -->
+        <h1
+          class="text-4xl md:text-5xl font-light leading-tight mb-6"
+          transition:name={`title-${project.id}`}
+        >
+          {title}
+        </h1>
+        <p class="text-lg text-[rgba(26,26,26,0.6)] font-light leading-relaxed">{description}</p>
+
+        <!-- Metadatos opcionales: solo se muestran si existen en el frontmatter -->
+        {(year || location || collaborators) && (
+          <dl class="mt-8 grid grid-cols-2 md:grid-cols-3 gap-6 border-t border-[rgba(26,26,26,0.1)] pt-8">
+            {year && (
+              <div>
+                <dt class="font-mono text-xs uppercase tracking-widest text-[rgba(26,26,26,0.4)] mb-1">Year</dt>
+                <dd class="text-sm">{year}</dd>
+              </div>
+            )}
+            {location && (
+              <div>
+                <dt class="font-mono text-xs uppercase tracking-widest text-[rgba(26,26,26,0.4)] mb-1">Location</dt>
+                <dd class="text-sm">{location}</dd>
+              </div>
+            )}
+            {collaborators && collaborators.length > 0 && (
+              <div class="col-span-2 md:col-span-1">
+                <dt class="font-mono text-xs uppercase tracking-widest text-[rgba(26,26,26,0.4)] mb-1">Collaborators</dt>
+                <dd class="text-sm">{collaborators.join(', ')}</dd>
+              </div>
+            )}
+          </dl>
+        )}
+      </header>
+
+      <!-- ── Cuerpo del Markdown ────────────────────────────────────────────
+           <slot /> inyecta el contenido del archivo .md aquí.
+           La clase "prose" aplica los estilos tipográficos definidos en global.css.
+      ───────────────────────────────────────────────────────────────────────── -->
+      <div class="prose max-w-none">
+        <slot />
+      </div>
+
+      <!-- Botón volver (abajo, al terminar de leer) -->
+      <div style="margin-top:4rem;padding-top:2rem;border-top:1px solid rgba(26,26,26,0.08);">
+        <a
+          href={`${import.meta.env.BASE_URL}#projects`}
+          class="inline-flex items-center gap-2 font-mono text-sm uppercase tracking-widest font-medium hover:opacity-70 transition-opacity"
+          style="color:#ea027e;"
+        >
+          ← Back to Projects
+        </a>
+      </div>
+
+      <!-- Proyectos relacionados (solo si hay al menos 1 con tags en común) -->
+      {related.length > 0 && <RelatedProjects projects={related} />}
+
+    </div>
+  </article>
+</BaseLayout>

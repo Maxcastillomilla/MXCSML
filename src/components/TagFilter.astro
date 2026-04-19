@@ -1,0 +1,43 @@
+---
+interface Props {
+  tags: string[];
+}
+const { tags } = Astro.props;
+
+const TAG_COLORS: Record<string, { bg: string; text: string; border: string }> = {
+  design:      { bg: '#c0fc04', text: '#1a1a1a', border: '#c0fc04' },
+  fabrication: { bg: '#ea027e', text: '#ffffff', border: '#ea027e' },
+  research:    { bg: '#3601fb', text: '#ffffff', border: '#3601fb' },
+  robotics:    { bg: '#1a1a1a', text: '#ffffff', border: '#1a1a1a' },
+};
+const fallback = { bg: '#1a1a1a', text: '#f8f7f5', border: '#1a1a1a' };
+---
+<div id="tag-filters" class="flex flex-wrap gap-2" role="group" aria-label="Filter by tag">
+  <!-- ALL button -->
+  <button
+    data-tag="all"
+    data-bg="#1a1a1a"
+    data-text="#f8f7f5"
+    class="tag-btn"
+    style="font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.15em; padding: 0.4rem 0.85rem; border: 1px solid #1a1a1a; background: #1a1a1a; color: #f8f7f5; cursor: pointer; transition: all 0.15s;"
+    aria-pressed="true"
+  >
+    All
+  </button>
+
+  {tags.map(tag => {
+    const c = TAG_COLORS[tag] ?? fallback;
+    return (
+      <button
+        data-tag={tag}
+        data-bg={c.bg}
+        data-text={c.text}
+        class="tag-btn"
+        style={`font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.15em; padding: 0.4rem 0.85rem; border: 1px solid ${c.border}; background: transparent; color: #1a1a1a; cursor: pointer; transition: all 0.15s;`}
+        aria-pressed="false"
+      >
+        {tag}
+      </button>
+    );
+  })}
+</div>

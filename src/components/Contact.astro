@@ -1,0 +1,57 @@
+---
+// ─────────────────────────────────────────────────────────────────────────────
+// CONTACT
+// Sección oscura de contacto al final de la página.
+// Usa el mismo lenguaje de grilla Swiss que la sección de proyectos
+// para mantener consistencia visual en toda la página.
+//
+// Para cambiar el email o el link de LinkedIn: editar los href directamente aquí.
+// ─────────────────────────────────────────────────────────────────────────────
+---
+<section id="contact" class="bg-[#1a1a1a] text-white">
+
+  <!-- Header de grilla Swiss — mismo patrón que Projects.astro -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid rgba(255,255,255,0.06);">
+    <div style="outline:1px solid rgba(255,255,255,0.06);padding:1.5rem 1.25rem;display:flex;align-items:flex-end;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:rgba(255,255,255,0.2);">(04)</span>
+    </div>
+    <div style="outline:1px solid rgba(255,255,255,0.06);grid-column:span 3;padding:1.5rem 1.25rem;display:flex;align-items:flex-end;background:#ea027e;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:#fff;">Get in Touch</span>
+    </div>
+    <div style="outline:1px solid rgba(255,255,255,0.06);background:#3601fb;"></div>
+  </div>
+
+  <!-- Contenido de contacto -->
+  <div class="py-24 px-8 md:px-16">
+    <div class="max-w-4xl mx-auto">
+
+      <h2 class="text-3xl md:text-5xl font-light leading-relaxed mb-20">
+        Open to research collaborations,<br />
+        teaching opportunities,<br />
+        and project commissions.
+      </h2>
+
+      <!-- Links de contacto con índice numérico -->
+      <div class="flex flex-col gap-4">
+        <a
+          href="mailto:maxcastillomilla@gmail.com"
+          class="font-mono text-sm text-white/50 hover:text-white transition-colors flex items-center gap-3"
+        >
+          <span class="text-white/20">01</span>
+          maxcastillomilla@gmail.com
+        </a>
+        <a
+          href="https://linkedin.com/in/maxcastillomilla"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-mono text-sm text-white/50 hover:text-white transition-colors flex items-center gap-3"
+        >
+          <span class="text-white/20">02</span>
+          LinkedIn ↗
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+</section>

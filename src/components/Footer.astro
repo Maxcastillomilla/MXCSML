@@ -1,0 +1,36 @@
+---
+const year = new Date().getFullYear();
+
+const swatches = [
+  { hex: '#c0fc04', label: '#c0fc04', textColor: '#1a1a1a', border: false },
+  { hex: '#ea027e', label: '#ea027e', textColor: '#ffffff', border: false },
+  { hex: '#3601fb', label: '#3601fb', textColor: '#ffffff', border: false },
+  { hex: '#1a1a1a', label: '#1a1a1a', textColor: '#ffffff', border: false },
+  { hex: '#ffffff', label: '#ffffff', textColor: '#1a1a1a', border: true  },
+  { hex: '#f8f7f5', label: '#f8f7f5', textColor: '#1a1a1a', border: true  },
+];
+---
+<footer style="background:#1a1a1a;border-top:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;">
+
+  <!-- Floor 1: copyright + built-with -->
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:0.85rem 1.5rem;">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;text-transform:uppercase;letter-spacing:0.15em;color:rgba(255,255,255,0.25);">
+      Max Castillo — {year}
+    </span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:0.58rem;text-transform:uppercase;letter-spacing:0.15em;color:rgba(255,255,255,0.25);">
+      Built with Astro
+    </span>
+  </div>
+
+  <!-- Floor 2: color swatches, full width -->
+  <div style="display:flex;align-items:stretch;">
+    {swatches.map(s => (
+      <div style={`flex:1;min-width:0;background:${s.hex};${s.border ? 'outline:1px solid rgba(255,255,255,0.15);' : ''}display:flex;align-items:center;justify-content:center;padding:0.75rem 0.2rem;`}>
+        <span style={`font-family:'JetBrains Mono',monospace;font-size:0.45rem;letter-spacing:0.04em;color:${s.textColor};white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;`}>
+          {s.label}
+        </span>
+      </div>
+    ))}
+  </div>
+
+</footer>

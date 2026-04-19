@@ -1,0 +1,28 @@
+---
+---
+<canvas
+  id="hero-canvas"
+  aria-hidden="true"
+></canvas>
+
+<script>
+  import { initHeroScene } from '../scripts/three-hero';
+
+  let cleanup: (() => void) | null = null;
+
+  function mount() {
+    const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement | null;
+    if (canvas) {
+      cleanup = initHeroScene(canvas);
+    }
+  }
+
+  // astro:page-load fires on both full page load and after ViewTransitions
+  document.addEventListener('astro:page-load', mount);
+
+  // Clean up Three.js resources before page swap
+  document.addEventListener('astro:before-swap', () => {
+    cleanup?.();
+    cleanup = null;
+  });
+</script>
