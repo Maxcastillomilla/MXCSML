@@ -125,13 +125,14 @@ const { title, description = 'Computational design researcher and architect.' } 
     const ORIGINAL   = 'MXCSML';
     const GLITCH_SET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ█▓▒░▄▀■';
     let   rafId: number;
-    let   exited = false;
+    let   exited      = false;
+    let   pageLoaded  = false;  // window.load disparó
+    let   textureReady = false; // textura de Three.js lista (o página sin hero)
 
     function randChar(): string {
       return GLITCH_SET[Math.floor(Math.random() * GLITCH_SET.length)];
     }
 
-    // Scramble: reemplaza cada carácter con uno aleatorio en cada frame
     function scrambleLoop() {
       const el = document.getElementById('loader-text');
       if (!el) return;
@@ -139,36 +140,48 @@ const { title, description = 'Computational design researcher and architect.' } 
       rafId = requestAnimationFrame(scrambleLoop);
     }
 
-    // Salida: detiene el scramble, restaura el texto, aplica fade out
     function exitLoader() {
       if (exited) return;
       exited = true;
-
       cancelAnimationFrame(rafId);
 
       const text   = document.getElementById('loader-text');
       const loader = document.getElementById('page-loader');
       if (!text || !loader) return;
 
-      // Mostrar el texto correcto antes de salir
       text.textContent = ORIGINAL;
-
-      // Pequeña pausa para que el usuario vea "MXCSML" limpio, luego fade
       setTimeout(() => {
         loader.classList.add('loader-exit');
-        // Eliminar del DOM tras la transición para no bloquear interacción
         setTimeout(() => loader.remove(), 750);
       }, 350);
     }
 
-    // Arrancar el scramble inmediatamente
+    // Solo salir cuando AMBAS condiciones estén listas
+    function checkReady() {
+      if (pageLoaded && textureReady) exitLoader();
+    }
+
     scrambleLoop();
 
-    // Salir cuando todo esté cargado (imágenes, fuentes, Three.js, etc.)
-    window.addEventListener('load', exitLoader);
+    // Condición 1: página HTML + recursos estáticos cargados
+    window.addEventListener('load', () => {
+      pageLoaded = true;
+      // Si esta página no tiene canvas de Three.js (ej: página de proyecto),
+      // la textura no va a disparar — se marca como lista directamente
+      if (!document.getElementById('hero-canvas')) {
+        textureReady = true;
+      }
+      checkReady();
+    });
 
-    // Seguridad: salir máximo a los 6 segundos aunque algo falle
-    setTimeout(exitLoader, 6000);
+    // Condición 2: textura de perfil.png lista en Three.js
+    window.addEventListener('hero-texture-loaded', () => {
+      textureReady = true;
+      checkReady();
+    });
+
+    // Seguridad: salir máximo a los 8 segundos aunque algo falle
+    setTimeout(exitLoader, 8000);
   </script>
 
   <Navbar />

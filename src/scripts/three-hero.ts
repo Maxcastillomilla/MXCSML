@@ -42,6 +42,8 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
     texture.colorSpace = THREE.SRGBColorSpace;
     uniforms.uTexture.value     = texture;
     uniforms.uImageAspect.value = texture.image.width / texture.image.height;
+    // Avisar al loader que la textura del hero ya está lista
+    window.dispatchEvent(new CustomEvent('hero-texture-loaded'));
   });
 
   const bgMat = new THREE.ShaderMaterial({
