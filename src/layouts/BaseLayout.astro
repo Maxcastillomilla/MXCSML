@@ -150,6 +150,8 @@ const { title, description = 'Computational design researcher and architect.' } 
       if (!text || !loader) return;
 
       text.textContent = ORIGINAL;
+      // Forzar scroll al top antes de revelar la página
+      window.scrollTo({ top: 0, behavior: 'instant' });
       setTimeout(() => {
         loader.classList.add('loader-exit');
         setTimeout(() => loader.remove(), 750);
