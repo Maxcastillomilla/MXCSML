@@ -5,11 +5,17 @@
 // Incluye: <head> con fuentes y SEO, Navbar, Footer, y el <slot /> donde
 // cada página inyecta su contenido.
 //
+// LOADER:
+//   Al cargar la página por primera vez aparece una cortina fucsia (#ea027e)
+//   con "MXCSML" en grande y efecto glitch/scramble mientras los recursos
+//   se están descargando. Desaparece con fade cuando window.load dispara.
+//   Solo se muestra en carga inicial — no en navegaciones View Transition.
+//
 // Para usarlo en una página nueva:
 //   import BaseLayout from '../layouts/BaseLayout.astro';
 //   <BaseLayout title="Mi página">...contenido...</BaseLayout>
 // ─────────────────────────────────────────────────────────────────────────────
-import { ClientRouter } from 'astro:transitions'; // Habilita animaciones de transición entre páginas
+import { ClientRouter } from 'astro:transitions';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
@@ -30,21 +36,143 @@ const { title, description = 'Computational design researcher and architect.' } 
   <title>{title}</title>
   <meta name="description" content={description} />
 
-  <!-- Habilita las view transitions (animación morph al navegar entre tarjeta → proyecto) -->
   <ClientRouter />
 
-  <!-- Fuentes de Google:
-       Syne (body) — geométrica con carácter propio, más distintiva que Inter
-       JetBrains Mono (labels, código) — legibilidad técnica
-  -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 </head>
 <body>
+
+  <!-- ── LOADER ─────────────────────────────────────────────────────────────────
+       Cortina de carga: cubre toda la pantalla con fondo fucsia mientras los
+       recursos se descargan. Se elimina del DOM cuando window.load dispara.
+
+       Desktop: "MXCSML" horizontal centrado
+       Mobile:  "MXCSML" rotado 90° (texto vertical) para llenar la pantalla
+  ─────────────────────────────────────────────────────────────────────────────── -->
+  <div id="page-loader" aria-hidden="true">
+    <span id="loader-text">MXCSML</span>
+    <!-- Barra de progreso: animación CSS fija de ~4s — indicador visual de carga -->
+    <div id="loader-bar"></div>
+  </div>
+
+  <style>
+    /* Cortina: cubre todo, z-index máximo */
+    #page-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      background: #ea027e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.7s ease;
+    }
+
+    /* Clase que se agrega al salir — fade out */
+    #page-loader.loader-exit {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Texto principal — desktop horizontal */
+    #loader-text {
+      font-family: 'Syne', 'Arial Black', sans-serif;
+      font-weight: 800;
+      font-size: clamp(5rem, 16vw, 18rem);
+      color: #ffffff;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      user-select: none;
+    }
+
+    /* Mobile: texto vertical rotado para llenar la pantalla en portrait */
+    @media (max-width: 767px) {
+      #loader-text {
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        font-size: clamp(4rem, 22vw, 7rem);
+        letter-spacing: -0.02em;
+      }
+    }
+
+    /* Barra de progreso: línea blanca semitransparente en la parte inferior */
+    #loader-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: rgba(255, 255, 255, 0.5);
+      animation: loader-progress 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes loader-progress {
+      0%   { width: 0%; }
+      60%  { width: 75%; }
+      90%  { width: 92%; }
+      100% { width: 100%; }
+    }
+  </style>
+
+  <script>
+    // ── Loader: scramble mientras carga, sale al disparar window.load ──────────
+    // Solo se muestra en la carga inicial de la página (no en View Transitions).
+    // El efecto scramble reemplaza los chars de "MXCSML" con caracteres random
+    // a 60fps para transmitir que algo está pasando.
+
+    const ORIGINAL   = 'MXCSML';
+    const GLITCH_SET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ█▓▒░▄▀■';
+    let   rafId: number;
+    let   exited = false;
+
+    function randChar(): string {
+      return GLITCH_SET[Math.floor(Math.random() * GLITCH_SET.length)];
+    }
+
+    // Scramble: reemplaza cada carácter con uno aleatorio en cada frame
+    function scrambleLoop() {
+      const el = document.getElementById('loader-text');
+      if (!el) return;
+      el.textContent = [...ORIGINAL].map(() => randChar()).join('');
+      rafId = requestAnimationFrame(scrambleLoop);
+    }
+
+    // Salida: detiene el scramble, restaura el texto, aplica fade out
+    function exitLoader() {
+      if (exited) return;
+      exited = true;
+
+      cancelAnimationFrame(rafId);
+
+      const text   = document.getElementById('loader-text');
+      const loader = document.getElementById('page-loader');
+      if (!text || !loader) return;
+
+      // Mostrar el texto correcto antes de salir
+      text.textContent = ORIGINAL;
+
+      // Pequeña pausa para que el usuario vea "MXCSML" limpio, luego fade
+      setTimeout(() => {
+        loader.classList.add('loader-exit');
+        // Eliminar del DOM tras la transición para no bloquear interacción
+        setTimeout(() => loader.remove(), 750);
+      }, 350);
+    }
+
+    // Arrancar el scramble inmediatamente
+    scrambleLoop();
+
+    // Salir cuando todo esté cargado (imágenes, fuentes, Three.js, etc.)
+    window.addEventListener('load', exitLoader);
+
+    // Seguridad: salir máximo a los 6 segundos aunque algo falle
+    setTimeout(exitLoader, 6000);
+  </script>
+
   <Navbar />
   <main>
-    <!-- Aquí se inyecta el contenido de cada página -->
     <slot />
   </main>
   <Footer />
@@ -61,5 +189,6 @@ const { title, description = 'Computational design researcher and architect.' } 
       }
     });
   </script>
+
 </body>
 </html>
