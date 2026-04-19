@@ -201,6 +201,17 @@ const { title, description = 'Computational design researcher and architect.' } 
         el?.scrollIntoView({ behavior: 'instant' });
       }
     });
+
+    // Fix del loader en View Transitions:
+    // Cuando se navega entre páginas, Astro inyecta el HTML de la página nueva
+    // (que incluye el #page-loader del layout) antes del swap. El script del
+    // loader NO corre de nuevo (módulos deduplicados), así que el loader
+    // quedaría visible y sin forma de cerrarse.
+    // Solución: eliminarlo del documento entrante ANTES de que se haga el swap.
+    document.addEventListener('astro:before-swap', (e) => {
+      const incoming = (e as CustomEvent & { newDocument: Document }).newDocument;
+      incoming?.getElementById('page-loader')?.remove();
+    });
   </script>
 
 </body>
