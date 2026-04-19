@@ -201,7 +201,7 @@ const BASE = import.meta.env.BASE_URL;
     shortEl.style.opacity = '0';
 
     // Pausa inicial para que el usuario lea el nombre completo
-    await sleep(1200);
+    await sleep(15000);
 
     // ── FASE 1: Deconstruir ──────────────────────────────────────────────────
     for (const word of shuffle(wordEls)) {
@@ -219,7 +219,7 @@ const BASE = import.meta.env.BASE_URL;
     shortEl.style.opacity = '1';
 
     // 15 segundos en estado condensado
-    await sleep(15000);
+    await sleep(4000);
 
     if (!animationActive) return;
 
