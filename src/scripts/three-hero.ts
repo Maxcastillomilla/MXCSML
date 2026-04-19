@@ -36,7 +36,7 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
   };
 
   // Carga la imagen y actualiza el aspect ratio cuando termine
-  loader.load('/images/perfil.png', (texture) => {
+  loader.load(`${import.meta.env.BASE_URL}images/perfil.png`, (texture) => {
     texture.colorSpace = THREE.SRGBColorSpace;
     uniforms.uTexture.value     = texture;
     uniforms.uImageAspect.value = texture.image.width / texture.image.height;
