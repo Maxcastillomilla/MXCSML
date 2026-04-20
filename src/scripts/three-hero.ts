@@ -135,6 +135,12 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
   const bgCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, -1, 1);
   bgScene.add(new THREE.Mesh(bgGeo, bgMat));
 
+  // ── Iluminación para los materiales del GLB ──────────────────────────────────
+  scene.add(new THREE.AmbientLight(0xffffff, 1.8));
+  const dirLight = new THREE.DirectionalLight(0xffffff, 2.0);
+  dirLight.position.set(2, 3, 4);
+  scene.add(dirLight);
+
   // ── Geometría 3D flotante — modelo GLB con materiales originales ────────────
   // TARGET_SIZE = diámetro objetivo en unidades de escena
   const TARGET_SIZE = 0.179;
@@ -155,7 +161,7 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
     gltf.scene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
         const geo = (child as THREE.Mesh).geometry.clone();
-        const mat = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.65 });
+        const mat = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.12 });
         outerGroup!.add(new THREE.Mesh(geo, mat));
       }
     });
