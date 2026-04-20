@@ -49,6 +49,7 @@ const INITIAL_VISIBLE = 6; // 2 filas de 3 proyectos cada una
 <div
   id="projects-grid"
   data-initial-visible={String(INITIAL_VISIBLE)}
+  data-initial-visible-mobile="3"
   style="display:grid;grid-template-columns:repeat(4,1fr);"
 >
   {projects.map((p, i) => {

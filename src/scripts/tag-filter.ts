@@ -26,14 +26,18 @@ export function initTagFilter(): void {
 
   if (!filterBtns.length || !cards.length) return;
 
-  // Leer el umbral inicial desde el data-attribute del grid
-  const initialVisible = parseInt(grid?.dataset.initialVisible ?? '999', 10);
+  // Umbrales según viewport — leídos desde data-attributes del grid
+  const desktopThreshold = parseInt(grid?.dataset.initialVisible       ?? '6', 10);
+  const mobileThreshold  = parseInt(grid?.dataset.initialVisibleMobile ?? '3', 10);
 
   let activeTag = 'all';
   let expanded  = false;
 
   // ── Actualizar visibilidad de todas las tarjetas ──────────────────────────
   function updateVisibility(): void {
+    // Recalcular en cada llamada para responder a cambios de tamaño
+    const threshold = window.innerWidth < 768 ? mobileThreshold : desktopThreshold;
+
     let visibleCount = 0;
     let foldedCount  = 0; // tarjetas ocultas por fold (no por filtro)
 
@@ -42,7 +46,7 @@ export function initTagFilter(): void {
 
       const matchesFilter = activeTag === 'all' || cardTags.includes(activeTag);
       // El fold solo aplica cuando se muestra todo (sin filtro activo)
-      const inFold = activeTag === 'all' && !expanded && i >= initialVisible;
+      const inFold = activeTag === 'all' && !expanded && i >= threshold;
 
       const shouldShow = matchesFilter && !inFold;
 
