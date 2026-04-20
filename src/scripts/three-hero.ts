@@ -150,12 +150,12 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
     const maxDim = Math.max(size.x, size.y, size.z);
     const scale  = maxDim > 0 ? TARGET_SIZE / maxDim : 1;
 
-    // Grupo exterior: wireframe blanco semitransparente
+    // Grupo exterior: wireframe blanco
     outerGroup = new THREE.Group();
     gltf.scene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
         const geo = (child as THREE.Mesh).geometry.clone();
-        const mat = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.18 });
+        const mat = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.65 });
         outerGroup!.add(new THREE.Mesh(geo, mat));
       }
     });
@@ -163,12 +163,15 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
     outerGroup.position.set(1.4, -0.9, 0);
     scene.add(outerGroup);
 
-    // Grupo interior: MeshNormal semitransparente, ~56% del tamaño
+    // Grupo interior: materiales/texturas originales del GLB, ~56% del tamaño
     innerGroup = new THREE.Group();
     gltf.scene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
-        const geo = (child as THREE.Mesh).geometry.clone();
-        const mat = new THREE.MeshNormalMaterial({ transparent: true, opacity: 0.6 });
+        const mesh    = child as THREE.Mesh;
+        const geo     = mesh.geometry.clone();
+        // Clonar material original para no mutar el asset cargado
+        const srcMat  = Array.isArray(mesh.material) ? mesh.material[0] : mesh.material;
+        const mat     = srcMat.clone();
         innerGroup!.add(new THREE.Mesh(geo, mat));
       }
     });
