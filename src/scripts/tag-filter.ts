@@ -19,6 +19,7 @@
 export function initTagFilter(): void {
   const filterBtns    = document.querySelectorAll<HTMLButtonElement>('.tag-btn');
   const cards         = document.querySelectorAll<HTMLElement>('.project-card');
+  const emptySlots    = document.querySelectorAll<HTMLElement>('.grid-empty-slot');
   const noResults     = document.getElementById('no-results');
   const showMoreBtn   = document.getElementById('show-more-btn');
   const showMoreSec   = document.getElementById('show-more-section');
@@ -74,6 +75,23 @@ export function initTagFilter(): void {
     if (noResults) {
       noResults.classList.toggle('hidden', visibleCount > 0);
     }
+
+    // Celdas vacías decorativas:
+    //   - Ocultas siempre que haya un filtro activo (para que no queden huecos)
+    //   - Ocultas si su grupo está completamente plegado (sin tarjetas visibles)
+    //   - Visibles solo en vista "all" con al menos 1 tarjeta visible en el grupo
+    const visibleByGroup = new Map<string, number>();
+    cards.forEach((card, i) => {
+      if (card.style.display !== 'none') {
+        const g = card.dataset.group ?? '0';
+        visibleByGroup.set(g, (visibleByGroup.get(g) ?? 0) + 1);
+      }
+    });
+    emptySlots.forEach(slot => {
+      const g = slot.dataset.group ?? '0';
+      const groupHasCards = (visibleByGroup.get(g) ?? 0) > 0;
+      slot.style.display = (activeTag === 'all' && groupHasCards) ? '' : 'none';
+    });
 
     // Botón Ver más: visible solo cuando se muestra "todo" (sin filtro activo)
     // y hay proyectos fuera del fold o la sección está expandida

@@ -161,6 +161,11 @@
     grid-column: 1 / -1 !important;
   }
 
+  /* Celdas vacías decorativas: no tienen sentido en 1 columna */
+  .grid-empty-slot {
+    display: none !important;
+  }
+
   /* La tarjeta "wide" (horizontal en desktop) se convierte en vertical en mobile */
   .wide-card-link {
     flex-direction: column !important;

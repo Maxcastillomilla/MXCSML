@@ -1,28 +1,27 @@
 ---
 // ─────────────────────────────────────────────────────────────────────────────
 // PROJECT GRID
-// Grilla plana de proyectos con filtrado por tag y botón "Ver más / Ver menos".
+// Grilla plana de 5 columnas con celda vacía decorativa por grupo.
 //
 // LAYOUT (desktop):
-//   - Grid de 4 columnas
-//   - Cada grupo de 3 proyectos: 1 tarjeta WIDE (span 2) + 2 NARROW (span 1)
-//     → 2+1+1 = 4 cols por fila, sin celdas vacías decorativas
-//   - Sin divs de fila intermedios: el grid es plano para que al filtrar
-//     las tarjetas se reagrupen correctamente sin huecos
+//   - Grid de 5 columnas, sin divs de fila intermedios (grid plano)
+//   - Cada grupo de 3 proyectos: 1 WIDE (span 2) + 2 NARROW (span 1) + 1 VACÍA (span 1)
+//     → 2+1+1+1 = 5 cols por grupo, posiciones mezcladas al azar en cada build
+//   - La celda vacía solo existe en desktop — en mobile se oculta via CSS
 //
-// LAYOUT MOBILE (< 768px):
-//   - 1 columna, todas las tarjetas apiladas verticalmente
-//   - Las wide se convierten en verticales (via CSS en global.css)
+// FILTRADO:
+//   - Al activar un filtro de tag, las celdas vacías se ocultan para que
+//     los proyectos restantes se reagrupen sin huecos
+//   - tag-filter.ts gestiona la visibilidad usando data-group para saber
+//     qué celda vacía corresponde a cada grupo de tarjetas
 //
 // SHOW MORE:
-//   - Por defecto se muestran INITIAL_VISIBLE proyectos (2 filas visuales)
-//   - El botón "Ver más" revela el resto; "Ver menos" vuelve al estado inicial
-//   - Cuando hay un filtro de tag activo se ignora el límite y se muestran
-//     todos los proyectos que coincidan
+//   - Por defecto se muestran INITIAL_VISIBLE proyectos (≈2 filas)
+//   - La celda vacía de un grupo completamente plegado también se oculta
+//   - El botón "Ver más" revela el resto y puede volver a contraerse
 //
-// FILTRO POR TAG:
-//   - TagFilter.astro renderiza los botones de filtro con data-tag
-//   - tag-filter.ts maneja show/hide y el estado del botón Ver más
+// MOBILE (< 768px):
+//   - 1 columna, celdas vacías ocultas, wide se voltea a vertical
 // ─────────────────────────────────────────────────────────────────────────────
 import ProjectCard from './ProjectCard.astro';
 import TagFilter from './TagFilter.astro';
@@ -35,34 +34,83 @@ interface Props {
 
 const { projects, allTags } = Astro.props;
 const BORDER = '1px solid #c2c2c2';
-const INITIAL_VISIBLE = 6; // 2 filas de 3 proyectos cada una
+const INITIAL_VISIBLE = 6; // 2 grupos de 3 proyectos visibles por defecto
+
+// Construir lista plana de slots mezclando posiciones dentro de cada grupo
+type Slot =
+  | { type: 'card'; project: CollectionEntry<'projects'>; projectIdx: number; groupIdx: number }
+  | { type: 'empty'; groupIdx: number };
+
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+const slots: Slot[] = [];
+for (let i = 0; i < projects.length; i += 3) {
+  const chunk = projects.slice(i, i + 3);
+  const groupIdx = Math.floor(i / 3);
+  const wideIdx  = Math.floor(Math.random() * chunk.length);
+
+  const group: Slot[] = [
+    ...chunk.map((p, j): Slot => ({
+      type: 'card',
+      project: p,
+      projectIdx: i + j,
+      groupIdx,
+      isWide: j === wideIdx,
+    } as any)),
+    { type: 'empty', groupIdx },
+  ];
+
+  slots.push(...shuffle(group));
+}
 ---
 
 <!-- Fila de filtros por tag -->
-<div style={`display:grid;grid-template-columns:repeat(4,1fr);`}>
-  <div style={`outline:${BORDER};padding:1.25rem;grid-column:span 4;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;`}>
+<div style={`display:grid;grid-template-columns:repeat(5,1fr);`}>
+  <div style={`outline:${BORDER};padding:1.25rem;grid-column:span 5;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;`}>
     <TagFilter tags={allTags} />
   </div>
 </div>
 
-<!-- Grilla plana de proyectos — sin divs de fila, sin celdas vacías -->
+<!-- Grilla plana de 5 columnas -->
 <div
   id="projects-grid"
   data-initial-visible={String(INITIAL_VISIBLE)}
   data-initial-visible-mobile="3"
-  style="display:grid;grid-template-columns:repeat(4,1fr);"
+  style="display:grid;grid-template-columns:repeat(5,1fr);"
 >
-  {projects.map((p, i) => {
-    const isWide = i % 3 === 0; // primer proyecto de cada grupo de 3 es wide
-    const isFolded = i >= INITIAL_VISIBLE;
+  {slots.map(slot => {
+    if (slot.type === 'empty') {
+      // Celda vacía: oculta si el grupo está completamente plegado al inicio
+      const groupStart  = slot.groupIdx * 3;
+      const groupFolded = groupStart >= INITIAL_VISIBLE;
+      return (
+        <div
+          class="grid-empty-slot"
+          data-group={String(slot.groupIdx)}
+          style={`outline:${BORDER};grid-column:span 1;${groupFolded ? 'display:none;' : ''}`}
+        />
+      );
+    }
+
+    // Tarjeta de proyecto
+    const s = slot as any;
+    const isFolded = s.projectIdx >= INITIAL_VISIBLE;
     return (
       <div
         class="project-card"
-        data-tags={JSON.stringify(p.data.tags)}
-        data-index={String(i)}
-        style={`outline:${BORDER};grid-column:span ${isWide ? 2 : 1};${isFolded ? 'display:none;' : ''}`}
+        data-tags={JSON.stringify(s.project.data.tags)}
+        data-index={String(s.projectIdx)}
+        data-group={String(s.groupIdx)}
+        style={`outline:${BORDER};grid-column:span ${s.isWide ? 2 : 1};${isFolded ? 'display:none;' : ''}`}
       >
-        <ProjectCard project={p} wide={isWide} />
+        <ProjectCard project={s.project} wide={s.isWide} />
       </div>
     );
   })}
@@ -74,10 +122,10 @@ const INITIAL_VISIBLE = 6; // 2 filas de 3 proyectos cada una
   No hay proyectos con este filtro.
 </div>
 
-<!-- Botón Ver más / Ver menos (solo se muestra si hay proyectos ocultos por fold) -->
-<div id="show-more-section" style={`display:none;`}>
-  <div style={`display:grid;grid-template-columns:repeat(4,1fr);`}>
-    <div style={`outline:${BORDER};padding:1.25rem;grid-column:span 4;display:flex;align-items:center;justify-content:center;`}>
+<!-- Botón Ver más / Ver menos -->
+<div id="show-more-section" style="display:none;">
+  <div style={`display:grid;grid-template-columns:repeat(5,1fr);`}>
+    <div style={`outline:${BORDER};padding:1.25rem;grid-column:span 5;display:flex;align-items:center;justify-content:center;`}>
       <button
         id="show-more-btn"
         style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;padding:0.55rem 1.5rem;border:1px solid #1a1a1a;background:transparent;color:#1a1a1a;cursor:pointer;transition:all 0.15s;"
@@ -88,9 +136,9 @@ const INITIAL_VISIBLE = 6; // 2 filas de 3 proyectos cada una
   </div>
 </div>
 
-<!-- Franja decorativa inferior con colores de categoría -->
-<div style="display:grid;grid-template-columns:repeat(4,1fr);">
-  <div style={`outline:${BORDER};padding:1rem 1.25rem;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;grid-column:span 4;`}>
+<!-- Franja decorativa inferior -->
+<div style="display:grid;grid-template-columns:repeat(5,1fr);">
+  <div style={`outline:${BORDER};padding:1rem 1.25rem;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;grid-column:span 5;`}>
     <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;padding:0.3rem 0.7rem;background:#c0fc04;color:#1a1a1a;">Design</span>
     <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;padding:0.3rem 0.7rem;background:#ea027e;color:#fff;">Fabrication</span>
     <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;padding:0.3rem 0.7rem;background:#3601fb;color:#fff;">Unreal</span>
@@ -102,18 +150,16 @@ const INITIAL_VISIBLE = 6; // 2 filas de 3 proyectos cada una
   import { initTagFilter } from '../scripts/tag-filter';
 
   function initAll() {
-    // ── Tag filter + show more ──────────────────────────────────────────────
     initTagFilter();
 
-    // ── Scroll reveal: aparecen las tarjetas al entrar al viewport ──────────
+    // Scroll reveal escalonado al entrar al viewport
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const card = entry.target as HTMLElement;
-          // Delay escalonado según posición dentro del padre (crea efecto cascada)
           const siblings = Array.from(card.parentElement?.children ?? []);
           const idx = siblings.indexOf(card);
-          card.style.transitionDelay = `${(idx % 4) * 60}ms`;
+          card.style.transitionDelay = `${(idx % 5) * 60}ms`;
           card.classList.add('revealed');
           observer.unobserve(card);
         }
@@ -122,20 +168,12 @@ const INITIAL_VISIBLE = 6; // 2 filas de 3 proyectos cada una
 
     document.querySelectorAll('.project-card').forEach(card => observer.observe(card));
 
-    // Hover del botón show-more (inline style porque no tenemos Tailwind en script)
     const btn = document.getElementById('show-more-btn');
     if (btn) {
-      btn.addEventListener('mouseenter', () => {
-        btn.style.background = '#1a1a1a';
-        btn.style.color = '#f8f7f5';
-      });
-      btn.addEventListener('mouseleave', () => {
-        btn.style.background = 'transparent';
-        btn.style.color = '#1a1a1a';
-      });
+      btn.addEventListener('mouseenter', () => { btn.style.background = '#1a1a1a'; btn.style.color = '#f8f7f5'; });
+      btn.addEventListener('mouseleave', () => { btn.style.background = 'transparent'; btn.style.color = '#1a1a1a'; });
     }
   }
 
-  // Se reinicializa en cada navegación (necesario para Astro View Transitions)
   document.addEventListener('astro:page-load', initAll);
 </script>
