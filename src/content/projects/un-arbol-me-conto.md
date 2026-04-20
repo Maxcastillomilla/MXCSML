@@ -1,27 +1,32 @@
 ---
 title: "Un árbol me contó"
-description: "Reassemblable tree sculpture for the Peñalolén Library compiling 140-character micro-stories from students, professors, and professionals."
-date: 2022-06-01
-tags: [design, fabrication]
+description: "Interlocking plywood tree designed from 1.5 sheets of material for Chile's Literature Week — branches hold short stories, exhibited at UAI campuses and donated to the Peñalolén municipality."
+date: 2017-01-01
+tags: [fabrication, design]
 cover: "../../assets/projects/un-arbol-me-conto.jpg"
 featured: false
-year: 2022
-location: "Peñalolén Library, Santiago, Chile"
+year: 2017
+location: "UAI — Campus Peñalolén y Viña del Mar / Municipalidad de Peñalolén"
 status: published
 ---
 
 ## Overview
 
-A group project donated to the Peñalolén Library in Chile, compiling stories from the library's 140-character micro-story contest, written by students, professors, and professionals. The project features a reassemblable tree structure designed for mobility across events, bringing these stories to life in an accessible format.
+A competition brief from the Adolfo Ibáñez University library with a strict material constraint: using no more than **one and a half sheets of 1200 × 2400 mm plywood**, design and fabricate a structure capable of displaying short stories during Chile's national Literature Week.
 
-My role focused on design and planning within the team.
+The response was a tree — constructed entirely through interlocking (press-fit) joinery with no fasteners or adhesives. The design was engineered so that every piece nested within the material budget, and the branching structure could be assembled and disassembled without tools.
 
-## Concept
+## Design Logic
 
-The tree acts as a physical archive — each branch carries one of the contest's micro-stories. The modular, knock-down construction allows the piece to travel between libraries, schools, and public events, adapting to different spatial contexts while maintaining its narrative identity.
+The tree's structural system relied on **encaje** (interlocking notch joints) cut directly into the plywood — a technique that turns sheet material into a rigid three-dimensional form through the precision of the cuts alone. The branching geometry was designed so that the outstretched limbs became natural display points: each branch could hold one or several printed short stories, creating a spatial reading experience that visitors navigated by moving around the piece.
 
-## Key Outcomes
+The material constraint drove the formal decisions — branch thickness, trunk proportion, and overall scale were all determined by what could be efficiently nested and cut from the available plywood area with minimal waste.
 
-- Modular wood structure assembled and disassembled without tools
-- Exhibited at the Peñalolén Library and multiple public events
-- Physical and visual documentation of the micro-story collection
+## Exhibition & Donation
+
+The tree was exhibited at two UAI campuses:
+
+- **Campus Peñalolén**, Santiago
+- **Campus Viña del Mar**
+
+Following the university exhibitions, the piece was **donated to the Municipalidad de Peñalolén**, where it was exhibited again as a public installation — extending the project beyond the academic context into the community it was originally named for.

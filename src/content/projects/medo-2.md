@@ -1,28 +1,40 @@
 ---
 title: "Medo 2.0"
-description: "Parametric bench design application developed for Arauco's Innovation Department, enabling customizable furniture for robotic fabrication with cellulose filament."
-date: 2023-06-01
-tags: [fabrication, research, grasshopper, design]
+description: "Parametric bench design system for Arauco's Innovation Department — web-editable surfaces via ShapeDiver, scaled up to robotic TPU fabrication with a KUKA arm at FabLab UAI."
+date: 2020-01-01
+tags: [fabrication, grasshopper, design, research]
 cover: "../../assets/projects/medo-2.jpg"
 featured: true
-year: 2023
-location: "Chile — Arauco Innovation Department"
+year: 2020
+location: "Chile — Arauco Innovation Department / FabLab UAI"
 status: published
 ---
 
 ## Overview
 
-Research project by Arauco's Innovation Department aimed at developing an application with an optimized user experience for creating parametrizable benches. The app allows users to design benches by adjusting parameters such as section shape, width, length, and texture. Additionally, the generated benches are designed for 3D printing using cellulose filament.
+Arauco — one of Chile's largest forestry and wood products companies — has an internal innovation department dedicated to exploring new applications for wood-derived materials, including furniture and architectural components made from wood cellulose.
 
-## Tools & Methods
+**Medo 2.0** was a direct commission from this department to develop a parametric surface generation system for designing customizable benches. The core requirement was that the tool be accessible through a web interface, enabling non-specialist users to edit geometry parameters without opening Grasshopper or Rhino.
 
-- **Grasshopper** — parametric interface and geometry generation
-- **Web interface** — browser-based parameter control connected to the design pipeline
-- **Robotic fabrication** — KUKA arm with custom extruder for cellulose filament deposition
-- Physical prototyping and material testing
+## Phase 1 — Parametric Web Tool (2020)
 
-## Key Outcomes
+The system was built in Grasshopper and connected to **ShapeDiver**, a platform that hosts Grasshopper definitions and exposes them as interactive web applications. This allowed Arauco's team to:
 
-- End-to-end workflow from web parameter input to fabricated prototype
-- Multiple bench variants produced through robotic 3D printing with cellulose-based filament
-- Manufacturing process documentation covering design → robot path → physical output
+- Adjust bench parameters (section profile, width, length, surface texture, structural density) directly in the browser
+- Preview real-time 3D geometry updates without any CAD software
+- Export fabrication-ready geometry from the web interface
+
+The parametric logic handled continuity between surface curvature, structural logic, and manufacturing constraints simultaneously — ensuring every generated variation was buildable.
+
+## Phase 2 — Robotic Fabrication (2024)
+
+Four years later the project was revived with a new fabrication objective: producing large-scale physical prototypes. The KUKA robotic arm at **FabLab UAI** was used to 3D print bench sections in **TPU** (thermoplastic polyurethane) — a flexible, high-resilience filament well suited for furniture applications requiring both structural performance and material softness.
+
+The workflow moved from Grasshopper geometry → toolpath generation → KUKA arm deposition, producing oversized sectional components that demonstrated the system's scalability from parametric model to physical object.
+
+## Tools
+
+- **Grasshopper / Rhinoceros** — parametric surface modeling and fabrication geometry
+- **ShapeDiver** — web deployment of the Grasshopper definition as a browser-based design tool
+- **KUKA robotic arm** (FabLab UAI) — large-format TPU extrusion
+- Custom web interface for parameter control and 3D preview
