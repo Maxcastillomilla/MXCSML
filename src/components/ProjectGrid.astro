@@ -1,24 +1,28 @@
 ---
 // ─────────────────────────────────────────────────────────────────────────────
 // PROJECT GRID
-// Genera la grilla Swiss de 5 columnas con todas las tarjetas de proyectos.
+// Grilla plana de proyectos con filtrado por tag y botón "Ver más / Ver menos".
 //
-// LÓGICA DE LAYOUT (desktop):
-//   - Por cada grupo de 3 proyectos se crea una "fila" de 5 columnas:
-//       * 1 tarjeta WIDE (horizontal, span 2)
-//       * 2 tarjetas NARROW (vertical, span 1)
-//       * 1 celda VACÍA decorativa (span 1)
-//       Total: 2 + 1 + 1 + 1 = 5 columnas ✓
-//   - Las posiciones se mezclan aleatoriamente (shuffle) en cada build.
+// LAYOUT (desktop):
+//   - Grid de 4 columnas
+//   - Cada grupo de 3 proyectos: 1 tarjeta WIDE (span 2) + 2 NARROW (span 1)
+//     → 2+1+1 = 4 cols por fila, sin celdas vacías decorativas
+//   - Sin divs de fila intermedios: el grid es plano para que al filtrar
+//     las tarjetas se reagrupen correctamente sin huecos
 //
-// LÓGICA MOBILE (< 768px):
-//   - Todo pasa a 1 columna (ver global.css → @media max-width 767px)
-//   - Las celdas vacías se ocultan
-//   - Las tarjetas wide se voltean a vertical (igual que narrow)
+// LAYOUT MOBILE (< 768px):
+//   - 1 columna, todas las tarjetas apiladas verticalmente
+//   - Las wide se convierten en verticales (via CSS en global.css)
 //
-// FILTRO POR TAGS:
-//   - El componente TagFilter.astro renderiza los botones de filtro
-//   - El script tag-filter.ts maneja la lógica de show/hide en el browser
+// SHOW MORE:
+//   - Por defecto se muestran INITIAL_VISIBLE proyectos (2 filas visuales)
+//   - El botón "Ver más" revela el resto; "Ver menos" vuelve al estado inicial
+//   - Cuando hay un filtro de tag activo se ignora el límite y se muestran
+//     todos los proyectos que coincidan
+//
+// FILTRO POR TAG:
+//   - TagFilter.astro renderiza los botones de filtro con data-tag
+//   - tag-filter.ts maneja show/hide y el estado del botón Ver más
 // ─────────────────────────────────────────────────────────────────────────────
 import ProjectCard from './ProjectCard.astro';
 import TagFilter from './TagFilter.astro';
@@ -31,104 +35,104 @@ interface Props {
 
 const { projects, allTags } = Astro.props;
 const BORDER = '1px solid #c2c2c2';
-
-type Slot =
-  | { type: 'wide';   project: CollectionEntry<'projects'> }
-  | { type: 'narrow'; project: CollectionEntry<'projects'> }
-  | { type: 'empty' };
-
-// Fisher-Yates shuffle: mezcla aleatoria del array
-function shuffle<T>(arr: T[]): T[] {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-// Construir filas: grupos de 3 proyectos + 1 celda vacía, posiciones al azar
-const rows: Slot[][] = [];
-for (let i = 0; i < projects.length; i += 3) {
-  const chunk = projects.slice(i, i + 3);
-  const wideIdx = Math.floor(Math.random() * chunk.length); // cuál de los 3 es "wide"
-  const slots: Slot[] = chunk.map((p, j) =>
-    j === wideIdx ? { type: 'wide', project: p } : { type: 'narrow', project: p }
-  );
-  slots.push({ type: 'empty' }); // celda decorativa vacía
-  rows.push(shuffle(slots));      // posiciones al azar
-}
+const INITIAL_VISIBLE = 6; // 2 filas de 3 proyectos cada una
 ---
 
-<!-- Fila de filtros por tag (clase "projects-row" para override mobile) -->
-<div class="projects-row" style={`display: grid; grid-template-columns: repeat(5, 1fr);`}>
-  <div class="tag-filter-row" style={`outline: ${BORDER}; padding: 1.25rem; grid-column: span 5; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;`}>
+<!-- Fila de filtros por tag -->
+<div style={`display:grid;grid-template-columns:repeat(4,1fr);`}>
+  <div style={`outline:${BORDER};padding:1.25rem;grid-column:span 4;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;`}>
     <TagFilter tags={allTags} />
   </div>
 </div>
 
-<!-- Grilla de proyectos -->
-<div id="projects-grid">
-  {rows.map(row => (
-    <!-- Cada fila es su propio grid de 5 columnas -->
-    <div class="projects-row" style="display: grid; grid-template-columns: repeat(5, 1fr);">
-      {row.map(slot => slot.type === 'empty' ? (
-        <!-- Celda vacía: solo decorativa, se oculta en mobile -->
-        <div class="grid-empty-slot" style={`outline: ${BORDER}; grid-column: span 1;`}></div>
-      ) : (
-        <!-- Tarjeta de proyecto: data-tags se usa por el script de filtrado -->
-        <div
-          class="project-card"
-          data-tags={JSON.stringify(slot.project.data.tags)}
-          style={`outline: ${BORDER}; grid-column: span ${slot.type === 'wide' ? 2 : 1};`}
-        >
-          <ProjectCard project={slot.project} wide={slot.type === 'wide'} />
-        </div>
-      ))}
-    </div>
-  ))}
-
-  <!-- Fila decorativa inferior con los colores de cada categoría -->
-  <div class="projects-row" style="display: grid; grid-template-columns: repeat(5, 1fr);">
-    <div class="tag-label-row" style={`outline: ${BORDER}; padding: 1rem 1.25rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; grid-column: span 5;`}>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;padding:0.3rem 0.7rem;background:#c0fc04;color:#1a1a1a;">Design</span>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;padding:0.3rem 0.7rem;background:#ea027e;color:#fff;">Fabrication</span>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;padding:0.3rem 0.7rem;background:#3601fb;color:#fff;">Research</span>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;padding:0.3rem 0.7rem;background:#1a1a1a;color:#fff;">Robotics</span>
-    </div>
-  </div>
+<!-- Grilla plana de proyectos — sin divs de fila, sin celdas vacías -->
+<div
+  id="projects-grid"
+  data-initial-visible={String(INITIAL_VISIBLE)}
+  style="display:grid;grid-template-columns:repeat(4,1fr);"
+>
+  {projects.map((p, i) => {
+    const isWide = i % 3 === 0; // primer proyecto de cada grupo de 3 es wide
+    const isFolded = i >= INITIAL_VISIBLE;
+    return (
+      <div
+        class="project-card"
+        data-tags={JSON.stringify(p.data.tags)}
+        data-index={String(i)}
+        style={`outline:${BORDER};grid-column:span ${isWide ? 2 : 1};${isFolded ? 'display:none;' : ''}`}
+      >
+        <ProjectCard project={p} wide={isWide} />
+      </div>
+    );
+  })}
 </div>
 
 <!-- Mensaje cuando ningún proyecto coincide con el filtro activo -->
 <div id="no-results" class="hidden"
   style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.15em;color:rgba(26,26,26,0.4);padding:2rem 1.25rem;">
-  No projects match this filter.
+  No hay proyectos con este filtro.
+</div>
+
+<!-- Botón Ver más / Ver menos (solo se muestra si hay proyectos ocultos por fold) -->
+<div id="show-more-section" style={`display:none;`}>
+  <div style={`display:grid;grid-template-columns:repeat(4,1fr);`}>
+    <div style={`outline:${BORDER};padding:1.25rem;grid-column:span 4;display:flex;align-items:center;justify-content:center;`}>
+      <button
+        id="show-more-btn"
+        style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;padding:0.55rem 1.5rem;border:1px solid #1a1a1a;background:transparent;color:#1a1a1a;cursor:pointer;transition:all 0.15s;"
+      >
+        ↓ Ver más
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Franja decorativa inferior con colores de categoría -->
+<div style="display:grid;grid-template-columns:repeat(4,1fr);">
+  <div style={`outline:${BORDER};padding:1rem 1.25rem;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;grid-column:span 4;`}>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;padding:0.3rem 0.7rem;background:#c0fc04;color:#1a1a1a;">Design</span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;padding:0.3rem 0.7rem;background:#ea027e;color:#fff;">Fabrication</span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;padding:0.3rem 0.7rem;background:#3601fb;color:#fff;">Unreal</span>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;padding:0.3rem 0.7rem;background:#1a1a1a;color:#fff;">Robotics</span>
+  </div>
 </div>
 
 <script>
   import { initTagFilter } from '../scripts/tag-filter';
 
   function initAll() {
-    // ── Tag filter ──────────────────────────────────────────────────────────
+    // ── Tag filter + show more ──────────────────────────────────────────────
     initTagFilter();
 
     // ── Scroll reveal: aparecen las tarjetas al entrar al viewport ──────────
-    // threshold: 0.08 = se activa cuando el 8% de la tarjeta es visible
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          // Pequeño delay escalonado según posición en la fila
           const card = entry.target as HTMLElement;
+          // Delay escalonado según posición dentro del padre (crea efecto cascada)
           const siblings = Array.from(card.parentElement?.children ?? []);
           const idx = siblings.indexOf(card);
-          card.style.transitionDelay = `${idx * 60}ms`; // 60ms entre cada tarjeta de la fila
+          card.style.transitionDelay = `${(idx % 4) * 60}ms`;
           card.classList.add('revealed');
-          observer.unobserve(card); // una vez revelada, no necesita seguir observando
+          observer.unobserve(card);
         }
       });
     }, { threshold: 0.08 });
 
     document.querySelectorAll('.project-card').forEach(card => observer.observe(card));
+
+    // Hover del botón show-more (inline style porque no tenemos Tailwind en script)
+    const btn = document.getElementById('show-more-btn');
+    if (btn) {
+      btn.addEventListener('mouseenter', () => {
+        btn.style.background = '#1a1a1a';
+        btn.style.color = '#f8f7f5';
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.background = 'transparent';
+        btn.style.color = '#1a1a1a';
+      });
+    }
   }
 
   // Se reinicializa en cada navegación (necesario para Astro View Transitions)

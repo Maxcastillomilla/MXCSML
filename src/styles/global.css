@@ -151,25 +151,14 @@
    y ProjectCard.astro.
    ─────────────────────────────────────────────────────────────────────────── */
 @media (max-width: 767px) {
-  /* Todas las filas del grid pasan a 1 columna */
-  .projects-row {
+  /* Grilla de proyectos: una sola columna */
+  #projects-grid {
     grid-template-columns: 1fr !important;
-  }
-
-  /* La fila de filtros y la de etiquetas decorativas ocupan todo el ancho */
-  .tag-filter-row,
-  .tag-label-row {
-    grid-column: 1 / -1 !important;
   }
 
   /* Cada tarjeta ocupa todo el ancho (sin span 2) */
   .project-card {
     grid-column: 1 / -1 !important;
-  }
-
-  /* La celda vacía decorativa desaparece en mobile (no tiene sentido en 1 col) */
-  .grid-empty-slot {
-    display: none !important;
   }
 
   /* La tarjeta "wide" (horizontal en desktop) se convierte en vertical en mobile */
