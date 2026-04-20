@@ -211,12 +211,13 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
     glitchTimer    = 0;
   }
 
-  const clock = new THREE.Clock();
+  const timer = new THREE.Timer();
   let animId: number;
 
   function animate() {
     animId = requestAnimationFrame(animate);
-    const dt = clock.getDelta();
+    timer.update();
+    const dt = timer.getDelta();
     uniforms.uTime.value += dt;
 
     // INTERVALO: glitch cada 2–4 segundos al azar
