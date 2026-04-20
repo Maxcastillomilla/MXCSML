@@ -143,7 +143,7 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
 
   // ── Geometría 3D flotante — modelo GLB con materiales originales ────────────
   // TARGET_SIZE = diámetro objetivo en unidades de escena
-  const TARGET_SIZE = 0.179;
+  const TARGET_SIZE = 0.116;
   let outerGroup: THREE.Group | null = null;
   let innerGroup: THREE.Group | null = null;
 
@@ -181,7 +181,7 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
         innerGroup!.add(new THREE.Mesh(geo, mat));
       }
     });
-    innerGroup.scale.setScalar(scale * 0.56);
+    innerGroup.scale.setScalar(scale * 0.34);
     innerGroup.position.set(1.4, -0.9, 0);
     scene.add(innerGroup);
   });
