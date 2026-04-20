@@ -136,8 +136,8 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
   bgScene.add(new THREE.Mesh(bgGeo, bgMat));
 
   // ── Geometría 3D flotante — modelo GLB ──────────────────────────────────────
-  // TARGET_SIZE = diámetro objetivo en unidades de escena (~1.6 = radio 0.8 del icosaedro original)
-  const TARGET_SIZE = 1.6;
+  // TARGET_SIZE = diámetro objetivo en unidades de escena
+  const TARGET_SIZE = 0.28;
   let outerGroup: THREE.Group | null = null;
   let innerGroup: THREE.Group | null = null;
 
@@ -160,7 +160,7 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
       }
     });
     outerGroup.scale.setScalar(scale);
-    outerGroup.position.set(1.4, 0.6, 0);
+    outerGroup.position.set(1.4, -0.3, 0);
     scene.add(outerGroup);
 
     // Grupo interior: MeshNormal semitransparente, ~56% del tamaño (proporcional al icosaedro)
@@ -173,7 +173,7 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
       }
     });
     innerGroup.scale.setScalar(scale * 0.56);
-    innerGroup.position.set(1.4, 0.6, 0);
+    innerGroup.position.set(1.4, -0.3, 0);
     scene.add(innerGroup);
   });
 
@@ -233,12 +233,12 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
     targetRot.y += (mouse.x * 0.5 - targetRot.y) * 0.05;
     const t = uniforms.uTime.value;
     if (outerGroup) {
-      outerGroup.rotation.x =  targetRot.x + t * 0.12;
-      outerGroup.rotation.y =  targetRot.y + t * 0.18;
+      outerGroup.rotation.x =  targetRot.x * 0.4 + t * 0.025;
+      outerGroup.rotation.y =  targetRot.y * 0.4 + t * 0.035;
     }
     if (innerGroup) {
-      innerGroup.rotation.x = -targetRot.x + t * 0.08;
-      innerGroup.rotation.y = -targetRot.y + t * 0.14;
+      innerGroup.rotation.x = -targetRot.x * 0.4 + t * 0.018;
+      innerGroup.rotation.y = -targetRot.y * 0.4 + t * 0.028;
     }
 
     renderer.autoClear = false;
