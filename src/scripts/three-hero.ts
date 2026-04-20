@@ -36,6 +36,7 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
     // Aspect ratios para calcular object-fit:cover en el shader
     uImageAspect:  { value: 1.0 },                                   // ancho/alto de la foto
     uCanvasAspect: { value: canvas.clientWidth / canvas.clientHeight }, // ancho/alto del canvas
+    uOffsetX:      { value: -0.12 },  // desplaza la foto a la derecha (+derecha = valor negativo)
   };
 
   // Carga la imagen y actualiza el aspect ratio cuando termine
@@ -68,6 +69,7 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
       uniform float     uGlitch;
       uniform float     uImageAspect;   // proporción de la foto (ancho / alto)
       uniform float     uCanvasAspect;  // proporción del canvas (ancho / alto)
+      uniform float     uOffsetX;       // desplazamiento horizontal del encuadre
       varying vec2      vUv;
 
       float rand(vec2 co)  { return fract(sin(dot(co, vec2(12.9898,78.233))) * 43758.5453); }
@@ -84,7 +86,7 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
 
         float scaleX = min(uCanvasAspect / uImageAspect, 1.0);
         float scaleY = min(uImageAspect / uCanvasAspect, 1.0);
-        uv.x = (uv.x - 0.5) * scaleX + 0.5;
+        uv.x = (uv.x - 0.5) * scaleX + 0.5 + uOffsetX;
         uv.y = (uv.y - 0.5) * scaleY + 0.5;
 
         // ── Glitch grueso: bloques horizontales ───────────────────────────────
