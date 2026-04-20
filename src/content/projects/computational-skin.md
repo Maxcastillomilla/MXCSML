@@ -2,7 +2,7 @@
 title: "Computational Facade System"
 description: "Adaptive facade panel system derived from environmental analysis and fabrication constraints, generated through multi-objective optimization."
 date: 2023-11-10
-tags: [design, fabrication, research]
+tags: [design, fabrication]
 cover: "../../assets/projects/computational-skin.jpg"
 featured: false
 year: 2023

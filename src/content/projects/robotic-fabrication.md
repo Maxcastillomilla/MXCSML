@@ -2,7 +2,7 @@
 title: "Robotic Fabrication Studies"
 description: "Computational workflow for robot-assisted concrete formwork generation using custom toolpath algorithms."
 date: 2024-03-15
-tags: [robotics, fabrication, research]
+tags: [robotics, fabrication]
 cover: "../../assets/projects/robotic-fabrication.jpg"
 featured: true
 year: 2024
@@ -13,7 +13,7 @@ status: published
 
 ## Overview
 
-This project investigates the integration of robotic fabrication processes with parametric computational design workflows. The central research question concerns how automated fabrication systems can be adapted to produce formally complex architectural components that remain structurally performative.
+This project investigates the integration of robotic fabrication processes with parametric computational design workflows. The central  question concerns how automated fabrication systems can be adapted to produce formally complex architectural components that remain structurally performative.
 
 ## Methodology
 

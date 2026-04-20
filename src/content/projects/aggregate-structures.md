@@ -2,7 +2,7 @@
 title: "Aggregate Structures"
 description: "Research into self-organizing granular assemblies as a structural and spatial strategy for architecture."
 date: 2023-06-01
-tags: [research, design, robotics]
+tags: [design, robotics]
 cover: "../../assets/projects/aggregate-structures.jpg"
 featured: false
 year: 2023

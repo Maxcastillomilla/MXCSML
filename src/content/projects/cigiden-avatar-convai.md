@@ -2,7 +2,7 @@
 title: "Avatar Sísmico — CIGIDEN × ConvAI"
 description: "Real-time conversational AI avatar trained on seismic data for Chile, projected via mapping over a topographic surface of Valparaíso in a live installation."
 date: 2025-01-01
-tags: [unreal, research]
+tags: [unreal]
 featured: true
 year: 2025
 location: "Valparaíso, Chile — CIGIDEN"
@@ -17,7 +17,7 @@ The avatar was embedded in a live projection mapping installation projected over
 
 ## System Architecture
 
-- **ConvAI** — large language model–backed avatar with custom knowledge base covering Chilean seismology, historical earthquakes, and CIGIDEN research
+- **ConvAI** — large language model–backed avatar with custom knowledge base covering Chilean seismology, historical earthquakes, and CIGIDEN 
 - **Real-time voice interaction** — visitors speak directly to the avatar and receive spoken responses, with no scripted menu or button interface
 - **Projection mapping** — the avatar's responses triggered dynamic visualizations (fault lines, shockwave propagation, affected zones) projected onto the Valparaíso terrain model
 - **Seismic simulation layer** — real-time earthquake scenario running in parallel, synchronized with the conversation topics
@@ -30,5 +30,5 @@ This project sits at the intersection of scientific outreach, spatial computing,
 
 - Unreal Engine 5 — avatar deployment, projection mapping pipeline, simulation logic
 - ConvAI — avatar training, voice recognition and synthesis, real-time API integration
-- Custom knowledge base built from CIGIDEN seismic research and Chilean geological data
+- Custom knowledge base built from CIGIDEN seismic  and Chilean geological data
 - Projection mapping hardware setup and calibration over physical terrain model
