@@ -137,7 +137,7 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
 
   // ── Geometría 3D flotante — modelo GLB con materiales originales ────────────
   // TARGET_SIZE = diámetro objetivo en unidades de escena
-  const TARGET_SIZE = 0.224;
+  const TARGET_SIZE = 0.179;
   let outerGroup: THREE.Group | null = null;
   let innerGroup: THREE.Group | null = null;
 
@@ -160,7 +160,7 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
       }
     });
     outerGroup.scale.setScalar(scale);
-    outerGroup.position.set(1.4, -0.55, 0);
+    outerGroup.position.set(1.4, -0.9, 0);
     scene.add(outerGroup);
 
     // Grupo interior: MeshNormal semitransparente, ~56% del tamaño
@@ -173,7 +173,7 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
       }
     });
     innerGroup.scale.setScalar(scale * 0.56);
-    innerGroup.position.set(1.4, -0.55, 0);
+    innerGroup.position.set(1.4, -0.9, 0);
     scene.add(innerGroup);
   });
 
