@@ -4,13 +4,16 @@
 //   1. FONDO: shader GLSL con foto en B&W + glitch
 //      La imagen se comporta como object-fit:cover centrada —
 //      siempre cubre todo el canvas manteniendo proporciones.
-//   2. GEOMETRÍA 3D: icosaedro wireframe + sólido, parallax con el mouse
+//   2. GEOMETRÍA 3D: modelo GLB (public/3d/ext.glb) wireframe + MeshNormal,
+//      parallax con el mouse
 //
 // Para CAMBIAR LA FOTO: reemplazar /images/perfil.png (mismo nombre)
+// Para CAMBIAR EL MODELO 3D: reemplazar /3d/ext.glb (mismo nombre)
 // Para AJUSTAR FRECUENCIA del glitch: buscar "INTERVALO" más abajo
 // ─────────────────────────────────────────────────────────────────────────────
 
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 export function initHeroScene(canvas: HTMLCanvasElement): () => void {
   const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, antialias: false });
@@ -132,19 +135,47 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
   const bgCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, -1, 1);
   bgScene.add(new THREE.Mesh(bgGeo, bgMat));
 
-  // ── Geometría 3D flotante ────────────────────────────────────────────────────
-  const geoDetail = new THREE.IcosahedronGeometry(0.8, 1);
-  const wireMat   = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.18 });
-  const geoMesh   = new THREE.Mesh(geoDetail, wireMat);
-  geoMesh.position.set(1.4, 0.6, 0);
+  // ── Geometría 3D flotante — modelo GLB ──────────────────────────────────────
+  // TARGET_SIZE = diámetro objetivo en unidades de escena (~1.6 = radio 0.8 del icosaedro original)
+  const TARGET_SIZE = 1.6;
+  let outerGroup: THREE.Group | null = null;
+  let innerGroup: THREE.Group | null = null;
 
-  const innerGeo  = new THREE.IcosahedronGeometry(0.45, 1);
-  const innerMat  = new THREE.MeshNormalMaterial({ transparent: true, opacity: 0.6 });
-  const innerMesh = new THREE.Mesh(innerGeo, innerMat);
-  innerMesh.position.set(1.4, 0.6, 0);
+  const gltfLoader = new GLTFLoader();
+  gltfLoader.load(`${base}3d/ext.glb`, (gltf) => {
+    // Calcular bounding box para normalizar el tamaño
+    const box     = new THREE.Box3().setFromObject(gltf.scene);
+    const size    = new THREE.Vector3();
+    box.getSize(size);
+    const maxDim  = Math.max(size.x, size.y, size.z);
+    const scale   = maxDim > 0 ? TARGET_SIZE / maxDim : 1;
 
-  scene.add(geoMesh);
-  scene.add(innerMesh);
+    // Grupo exterior: wireframe blanco semitransparente
+    outerGroup = new THREE.Group();
+    gltf.scene.traverse((child) => {
+      if ((child as THREE.Mesh).isMesh) {
+        const geo = (child as THREE.Mesh).geometry.clone();
+        const mat = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.18 });
+        outerGroup!.add(new THREE.Mesh(geo, mat));
+      }
+    });
+    outerGroup.scale.setScalar(scale);
+    outerGroup.position.set(1.4, 0.6, 0);
+    scene.add(outerGroup);
+
+    // Grupo interior: MeshNormal semitransparente, ~56% del tamaño (proporcional al icosaedro)
+    innerGroup = new THREE.Group();
+    gltf.scene.traverse((child) => {
+      if ((child as THREE.Mesh).isMesh) {
+        const geo = (child as THREE.Mesh).geometry.clone();
+        const mat = new THREE.MeshNormalMaterial({ transparent: true, opacity: 0.6 });
+        innerGroup!.add(new THREE.Mesh(geo, mat));
+      }
+    });
+    innerGroup.scale.setScalar(scale * 0.56);
+    innerGroup.position.set(1.4, 0.6, 0);
+    scene.add(innerGroup);
+  });
 
   // ── Mouse parallax ───────────────────────────────────────────────────────────
   const mouse     = new THREE.Vector2();
@@ -201,10 +232,14 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
     targetRot.x += (mouse.y * 0.3 - targetRot.x) * 0.05;
     targetRot.y += (mouse.x * 0.5 - targetRot.y) * 0.05;
     const t = uniforms.uTime.value;
-    geoMesh.rotation.x   =  targetRot.x + t * 0.12;
-    geoMesh.rotation.y   =  targetRot.y + t * 0.18;
-    innerMesh.rotation.x = -targetRot.x + t * 0.08;
-    innerMesh.rotation.y = -targetRot.y + t * 0.14;
+    if (outerGroup) {
+      outerGroup.rotation.x =  targetRot.x + t * 0.12;
+      outerGroup.rotation.y =  targetRot.y + t * 0.18;
+    }
+    if (innerGroup) {
+      innerGroup.rotation.x = -targetRot.x + t * 0.08;
+      innerGroup.rotation.y = -targetRot.y + t * 0.14;
+    }
 
     renderer.autoClear = false;
     renderer.clear();
@@ -225,12 +260,26 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
   window.addEventListener('resize', onResize);
 
   // Cleanup para Astro View Transitions
+  function disposeGroup(group: THREE.Group | null) {
+    if (!group) return;
+    group.traverse((child) => {
+      if ((child as THREE.Mesh).isMesh) {
+        const mesh = child as THREE.Mesh;
+        mesh.geometry.dispose();
+        (Array.isArray(mesh.material) ? mesh.material : [mesh.material])
+          .forEach((m) => m.dispose());
+      }
+    });
+  }
+
   return () => {
     cancelAnimationFrame(animId);
     window.removeEventListener('mousemove', onMouseMove);
     window.removeEventListener('resize', onResize);
     renderer.dispose();
-    bgMat.dispose(); wireMat.dispose(); innerMat.dispose();
-    geoDetail.dispose(); innerGeo.dispose(); bgGeo.dispose();
+    bgMat.dispose();
+    bgGeo.dispose();
+    disposeGroup(outerGroup);
+    disposeGroup(innerGroup);
   };
 }
