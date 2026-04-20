@@ -3,7 +3,6 @@ title: "Avatar Sísmico — CIGIDEN × ConvAI"
 description: "Real-time conversational AI avatar trained on seismic data for Chile, projected via mapping over a topographic surface of Valparaíso in a live installation."
 date: 2025-01-01
 tags: [unreal, research]
-cover: "../../assets/projects/cigiden-avatar-convai.jpg"
 featured: true
 year: 2025
 location: "Valparaíso, Chile — CIGIDEN"

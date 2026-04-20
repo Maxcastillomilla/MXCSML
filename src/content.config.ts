@@ -23,7 +23,7 @@ const projects = defineCollection({
       description:   z.string().max(300),                    // Resumen corto (máx 300 chars)
       date:          z.coerce.date(),                        // Fecha (YYYY-MM-DD)
       tags:          z.array(z.string()),                    // Etiquetas: design, fabrication, research, robotics
-      cover:         image(),                                // Imagen portada (ruta relativa desde el .md)
+      cover:         image().optional(),                      // Imagen portada (opcional — sin imagen muestra fondo neutro)
       featured:      z.boolean().default(false),             // Destacado (no se usa aún)
       status:        z.enum(['published', 'draft']).default('published'), // 'draft' lo oculta
       year:          z.number().optional(),                  // Año del proyecto

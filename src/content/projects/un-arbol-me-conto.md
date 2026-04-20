@@ -3,7 +3,6 @@ title: "Un árbol me contó"
 description: "Interlocking plywood tree designed from 1.5 sheets of material for Chile's Literature Week — branches hold short stories, exhibited at UAI campuses and donated to the Peñalolén municipality."
 date: 2017-01-01
 tags: [fabrication, design]
-cover: "../../assets/projects/un-arbol-me-conto.jpg"
 featured: false
 year: 2017
 location: "UAI — Campus Peñalolén y Viña del Mar / Municipalidad de Peñalolén"

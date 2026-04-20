@@ -3,7 +3,6 @@ title: "DEX Virtual Showroom"
 description: "Immersive 3D museum and product gallery for DEX modular flooring, covering the full manufacturing lifecycle from production to mining-grade deployment."
 date: 2024-06-01
 tags: [unreal, design]
-cover: "../../assets/projects/dex-virtual-showroom.jpg"
 featured: false
 year: 2024
 location: "Chile — DEX Pisos Modulares"

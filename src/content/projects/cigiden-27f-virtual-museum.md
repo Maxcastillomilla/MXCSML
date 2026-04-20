@@ -3,7 +3,6 @@ title: "Chile: Territorio en Movimiento — CIGIDEN"
 description: "Interactive virtual museum with 3D simulations of Chilean natural disasters — earthquakes, tsunamis, landslides and volcanic eruptions — built for student audiences during the pandemic."
 date: 2020-06-01
 tags: [unreal, research, design]
-cover: "../../assets/projects/cigiden-27f-virtual-museum.jpg"
 featured: true
 year: 2020
 location: "Chile — CIGIDEN (Centro de Investigación para la Gestión Integrada del Riesgo de Desastres)"
