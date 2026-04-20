@@ -135,44 +135,37 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
   const bgCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, -1, 1);
   bgScene.add(new THREE.Mesh(bgGeo, bgMat));
 
-  // ── Geometría 3D flotante — modelo GLB ──────────────────────────────────────
+  // ── Geometría 3D flotante — modelo GLB con materiales originales ────────────
   // TARGET_SIZE = diámetro objetivo en unidades de escena
-  const TARGET_SIZE = 0.28;
+  const TARGET_SIZE = 0.224;
   let outerGroup: THREE.Group | null = null;
   let innerGroup: THREE.Group | null = null;
 
   const gltfLoader = new GLTFLoader();
   gltfLoader.load(`${base}3d/ext.glb`, (gltf) => {
     // Calcular bounding box para normalizar el tamaño
-    const box     = new THREE.Box3().setFromObject(gltf.scene);
-    const size    = new THREE.Vector3();
+    const box    = new THREE.Box3().setFromObject(gltf.scene);
+    const size   = new THREE.Vector3();
     box.getSize(size);
-    const maxDim  = Math.max(size.x, size.y, size.z);
-    const scale   = maxDim > 0 ? TARGET_SIZE / maxDim : 1;
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const scale  = maxDim > 0 ? TARGET_SIZE / maxDim : 1;
 
-    // Grupo exterior: wireframe blanco semitransparente
-    outerGroup = new THREE.Group();
-    gltf.scene.traverse((child) => {
-      if ((child as THREE.Mesh).isMesh) {
-        const geo = (child as THREE.Mesh).geometry.clone();
-        const mat = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.18 });
-        outerGroup!.add(new THREE.Mesh(geo, mat));
-      }
-    });
+    // Grupo con materiales/texturas originales del GLB
+    outerGroup = gltf.scene;
     outerGroup.scale.setScalar(scale);
     outerGroup.position.set(1.4, -0.3, 0);
     scene.add(outerGroup);
 
-    // Grupo interior: MeshNormal semitransparente, ~56% del tamaño (proporcional al icosaedro)
+    // Wireframe superpuesto semitransparente sobre el modelo original
     innerGroup = new THREE.Group();
     gltf.scene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
         const geo = (child as THREE.Mesh).geometry.clone();
-        const mat = new THREE.MeshNormalMaterial({ transparent: true, opacity: 0.6 });
+        const mat = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.12 });
         innerGroup!.add(new THREE.Mesh(geo, mat));
       }
     });
-    innerGroup.scale.setScalar(scale * 0.56);
+    innerGroup.scale.setScalar(scale);
     innerGroup.position.set(1.4, -0.3, 0);
     scene.add(innerGroup);
   });
