@@ -141,14 +141,15 @@ export function initHeroScene(canvas: HTMLCanvasElement): () => void {
   dirLight.position.set(2, 3, 4);
   scene.add(dirLight);
 
-  // ── Geometría 3D flotante — modelo GLB con materiales originales ────────────
-  // TARGET_SIZE = diámetro objetivo en unidades de escena
+  // ── Geometría 3D flotante — DESHABILITADO temporalmente ──────────────────────
+  // Para re-activar: cambiar SHOW_3D a true
+  const SHOW_3D = false;
   const TARGET_SIZE = 0.116;
   let outerGroup: THREE.Group | null = null;
   let innerGroup: THREE.Group | null = null;
 
   const gltfLoader = new GLTFLoader();
-  gltfLoader.load(`${base}3d/ext.glb`, (gltf) => {
+  if (SHOW_3D) gltfLoader.load(`${base}3d/ext.glb`, (gltf) => {
     // Calcular bounding box para normalizar el tamaño
     const box    = new THREE.Box3().setFromObject(gltf.scene);
     const size   = new THREE.Vector3();
