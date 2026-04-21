@@ -13,7 +13,7 @@ status: published
 
 ## Overview
 
-![alt text](image-7.png)
+![alt text](human-trace/image-7.png)
 
 Human Trace is a robotic sketching system that translates a person's face into a continuous, single-stroke physical drawing executed by an ABB robotic arm. Developed at IAAC's Master in AI for Architecture and the Built Environment, the project investigates how computational processes can produce fluid material expression under strict algorithmic constraints.
 
@@ -21,7 +21,7 @@ The core challenge: the drawing tool never leaves the surface. Unlike convention
 
 ## Pipeline
 
-![alt text](image-8.png)
+![alt text](human-trace/image-8.png)
 
 The system runs as a five-stage workflow connecting Python, Grasshopper, and the ABB robot:
 
@@ -42,14 +42,14 @@ ABB RAPID code drives the arm through the full trajectory via MoveL commands —
 
 ## Technical Details
 
-![alt text](image-9.png)
+![alt text](human-trace/image-9.png)
 
 - **End-effector angle:** 45°–60° to mimic natural drawing mechanics and prevent tool drag
 - **Path optimization:** nearest-neighbor algorithm applied to contour point ordering
 - **Vision:** Canny edge detection on grayscale + blur-filtered webcam crop
 - **Communication:** Python ↔ Grasshopper data bridge for geometry processing
 
-![alt text](image-10.png)
+![alt text](human-trace/image-10.png)
 
 ## Role & Tools
 

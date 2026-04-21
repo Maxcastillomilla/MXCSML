@@ -19,19 +19,19 @@ The project proposes a joystick skin: a form-fitting accessory that integrates d
 
 ## Design Process
 
-![alt text](<Captura de pantalla 2025-11-06 233759.png>)
+![alt text](<control-de-ansiedad/Captura de pantalla 2025-11-06 233759.png>)
 
 The team formed with the advisory input of the Mindy team, M84.latam, and a reflexologist, whose expertise shaped the placement and intensity of the pressure zones on the skin. The design went through continuous iteration — testing form, material, texture density, and pressure geometry — until arriving at a solution that was both convincing conceptually and testable in real context.
 
 The reflexology logic translated directly into the geometry: specific surface zones correspond to pressure points mapped to emotional regulation, making the tactile interaction functional rather than purely aesthetic.
 
-![alt text](<Captura de pantalla 2025-11-07 132754.png>)
+![alt text](<control-de-ansiedad/Captura de pantalla 2025-11-07 132754.png>)
 
 ## Fabrication
 
 Multiple digital design and fabrication processes were developed in collaboration with FabLab UAI, whose support was key to materializing a proposal at this level. The fabrication workflow allowed rapid iteration between digital models and physical prototypes for in-context testing.
 
-![alt text](control.jpg)
+![alt text](control-de-ansiedad/control.jpg)
 
 ## Role & Tools
 

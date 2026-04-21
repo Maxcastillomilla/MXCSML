@@ -12,7 +12,7 @@ status: published
 
 ## Overview
 
-![alt text](image-32.png)
+![alt text](un-arbol-me-conto/image-32.png)
 
 A competition brief from the Adolfo Ibáñez University library with a strict material constraint: using no more than **one and a half sheets of 1200 × 2400 mm plywood**, design and fabricate a structure capable of displaying short stories during Chile's national Literature Week.
 
@@ -20,7 +20,7 @@ The response was a tree — constructed entirely through interlocking (press-fit
 
 ## Design Logic
 
-![alt text](image-31.png)
+![alt text](un-arbol-me-conto/image-31.png)
 
 The tree's structural system relied on **encaje** (interlocking notch joints) cut directly into the plywood — a technique that turns sheet material into a rigid three-dimensional form through the precision of the cuts alone. The branching geometry was designed so that the outstretched limbs became natural display points: each branch could hold one or several printed short stories, creating a spatial reading experience that visitors navigated by moving around the piece.
 
@@ -28,7 +28,7 @@ The material constraint drove the formal decisions — branch thickness, trunk p
 
 ## Exhibition & Donation
 
-![alt text](image-33.png)
+![alt text](un-arbol-me-conto/image-33.png)
 
 The tree was exhibited at two UAI campuses:
 

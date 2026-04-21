@@ -28,7 +28,7 @@ The avatar was embedded in a live projection mapping installation projected over
 
 This project sits at the intersection of scientific outreach, spatial computing, and conversational AI — demonstrating how disaster risk communication can become embodied, dialogic, and site-specific rather than passive and screen-based.
 
-![alt text](pre.jpg)
+![alt text](cigiden-avatar/pre.jpg)
 
 ## Role & Tools
 

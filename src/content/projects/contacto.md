@@ -17,11 +17,11 @@ Contacto was my undergraduate thesis, developed between 2019 and 2020. The proje
 Through a qualitative  process involving in-depth interviews with people with spinal cord injuries, disability activists, Ministry of Health representatives, and rehabilitation professionals, the project identified a critical gap: the absence of tools designed to support sexual reintegration for people with psychomotor disabilities and genital sensory loss.
 
 ## The Device
-![alt text](image-4.png)
+![alt text](contacto/image-4.png)
 
 The  led to the design of a **therapeutic glove** — a wearable device with internal chambers filled with therapeutic gel capable of maintaining and transitioning between different temperatures. The thermal variation enables the exploration of erogenous zones for users with reduced or absent tactile sensation, using temperature as a substitute sensory channel.
 
-![alt text](image-2.png)
+![alt text](contacto/image-2.png)
 
 Key features:
 
@@ -30,7 +30,7 @@ Key features:
 - **Soft robotics influence** — the design drew directly from soft robot technology: pneumatic actuators, compliant material structures, and body-conforming geometries informed both the glove's architecture and its thermal actuation logic
 - **Material ** — prototypes were developed using therapeutic gel, Ecoflex silicone, and other compliant materials to evaluate tactile and thermal performance
 
-![alt text](image-3.png)
+![alt text](contacto/image-3.png)
 
 ## Research Process
 

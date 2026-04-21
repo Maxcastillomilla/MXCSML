@@ -35,26 +35,26 @@ Optimal TCP distance from slip: 6–10mm. Below this range the tool leaves resid
 
 **Stepping distance**
 Spacing between adjacent 25mm pellets tested across a range around 25mm to understand binding quality and continuity between elements.
-![alt text](image-28.png)
+![alt text](studio-task-3-shape/image-28.png)
 
 **Euler angle**
 Rotation of the end effector up to ±30° explored to produce angled deposits — beyond 30° structural integrity and tool-collision clearance became limiting factors.
-![alt text](image-29.png)
+![alt text](studio-task-3-shape/image-29.png)
 **Stacking**
 Layered structures built by combining height, stepping, and angle parameters across successive passes, testing how previously deposited pellets influence subsequent layer behavior.
 
-![alt text](image-30.png)
+![alt text](studio-task-3-shape/image-30.png)
 
 ## Final Iterations
 
 Three compositions combined the learned parameters into complex robotic pathways:
 
 1. Angled + Height + Stacking
-![alt text](image-25.png)
+![alt text](studio-task-3-shape/image-25.png)
 2. Angled + Height + Stepping
-![alt text](image-26.png)
+![alt text](studio-task-3-shape/image-26.png)
 3. Angled + Height + Stepping + Stacking
-![alt text](image-27.png)
+![alt text](studio-task-3-shape/image-27.png)
 
 
 

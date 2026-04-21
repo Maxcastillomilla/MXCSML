@@ -17,7 +17,7 @@ A four-week workshop project at IAAC's Master in Robotics & Advanced Constructio
 
 The result was a 1-litre syringe mechanism mounted on the robot, with a motorized plunger controlled via Arduino and stepper motors. The robotic path was designed in Grasshopper, which also synchronized motor activation timing with the arm's movement.
 
-![alt text](technical-drawing-2-1536x1144.jpg)
+![alt text](anatomy-of-a-machine/technical-drawing-2-1536x1144.jpg)
 ## System Architecture
 
 - **ABB robotic arm** — large-scale industrial robot carrying the end effector along the canvas trajectory
@@ -32,13 +32,13 @@ The structural chassis of the end effector was fabricated from laser-cut 4mm acr
 
 Material: black acrylic paint on canvas.
 
-![alt text](first-iterations.png)
+![alt text](anatomy-of-a-machine/first-iterations.png)
 
 ## Performance Notes
 
 Gravity played an unintended role: continuous drip caused paint to trace the robot's full path rather than producing discrete controlled spills. Motor speed was insufficient for rapid ejection, resulting in shorter spill marks than designed. These constraints shifted the outcome from precise paint dots to a continuous trace — a direct material record of the robot's movement through space.
 
-![alt text](travel-robot.gif)
+![alt text](anatomy-of-a-machine/travel-robot.gif)
 
 ## Role & Tools
 

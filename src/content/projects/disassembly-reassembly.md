@@ -13,7 +13,7 @@ status: published
 
 ## Overview
 
-![alt text](image-455.png)
+![alt text](disassembly-reassembly/image-455.png)
 
 A workshop at IAAC's Master in Robotics & Advanced Construction exploring robotic disassembly and reassembly as a strategy for material reuse. The core question: how can machines actively participate in evaluating and reorganizing reclaimed materials into new structures in real time?
 
@@ -21,7 +21,7 @@ The raw material was a set of used bricks — each with different characteristic
 
 ## Classification System
 
-![alt text](image-457.png)
+![alt text](disassembly-reassembly/image-457.png)
 
 Each brick was inventoried and evaluated along two variables:
 
@@ -36,7 +36,7 @@ With the full brick inventory and scores established, AI algorithms generated th
 
 ## Robotic Reassembly
 
-![alt text](image-472.png)
+![alt text](disassembly-reassembly/image-472.png)
 
 A Universal Robots arm executed the reassembly, following the AI-generated placement instructions to build the tower brick by brick. Computer vision provided object perception for locating bricks in the workspace; sensor-based feedback guided pick-and-place operations in real time.
 

@@ -18,7 +18,7 @@ Arauco — one of Chile's largest forestry and wood products companies — has a
 
 ## Phase 1 — Parametric Web Tool (2020)
 
-![alt text](image-16.png)
+![alt text](medo-2/image-16.png)
 
 The system was built in Grasshopper and connected to **ShapeDiver**, a platform that hosts Grasshopper definitions and exposes them as interactive web applications. This allowed Arauco's team to:
 
@@ -30,13 +30,13 @@ The parametric logic handled continuity between surface curvature, structural lo
 
 ## Phase 2 — Robotic Fabrication (2024)
 
-![alt text](image-17.png)
+![alt text](medo-2/image-17.png)
 
 Four years later the project was revived with a new fabrication objective: producing large-scale physical prototypes. The KUKA robotic arm at **FabLab UAI** was used to 3D print bench sections in **TPU** (thermoplastic polyurethane) — a flexible, high-resilience filament well suited for furniture applications requiring both structural performance and material softness.
 
 The workflow moved from Grasshopper geometry → toolpath generation → KUKA arm deposition, producing oversized sectional components that demonstrated the system's scalability from parametric model to physical object.
 
-![alt text](image-15.png)
+![alt text](medo-2/image-15.png)
 
 ## Tools
 
@@ -45,4 +45,4 @@ The workflow moved from Grasshopper geometry → toolpath generation → KUKA ar
 - **KUKA robotic arm** (FabLab UAI) — large-format TPU extrusion
 - Custom web interface for parameter control and 3D preview
 
-![alt text](image-14.png)
+![alt text](medo-2/image-14.png)
