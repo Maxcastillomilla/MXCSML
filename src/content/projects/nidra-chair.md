@@ -22,9 +22,7 @@ The form references protective, enclosing shapes: a hybrid between a shell, an e
 ![alt text](nidra-chair/image-20.png)
 
 The chair geometry was built using SubD (subdivision surface) modeling to generate a smooth, open-surface form. Dragon-scale surface texture was generated in Grasshopper via the Weavebird plugin, with extrusion heights driven by surface point parameters to create organic variation across the geometry.
-![alt text](nidra-chair/image-21.png)
-![alt text](nidra-chair/image-22.png)
-![alt text](nidra-chair/image-23.png)
+
 
 The digital model used for fabrication was based on a photogrammetry scan of the physical blank, scaled to match — allowing the milling toolpaths to account for real-world dimensional inconsistencies between the digital design and the assembled laminated stock.
 
