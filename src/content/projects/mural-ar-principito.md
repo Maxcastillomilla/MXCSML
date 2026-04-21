@@ -2,6 +2,7 @@
 title: "Mural AR El Principito — Feria de las Culturas Ñuble 2023"
 description: "Augmented reality filter for a street mural of El Principito in Chillán — developed with Meta Spark for CRT+IC, bringing the mural to life in 3D during the Feria de las Culturas, Artes y Patrimonio."
 date: 2023-12-01
+cover: ../../assets/projects/ar_critic.jpg
 tags: [design]
 featured: false
 year: 2023

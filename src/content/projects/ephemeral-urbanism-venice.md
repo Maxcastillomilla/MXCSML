@@ -2,6 +2,7 @@
 title: "Ephemeral Urbanism — Venice Biennale 2016"
 description: "UAI DesignLab course research on ephemeral cities — data and case studies contributed to the projections shown in Rahul Mehrotra and Felipe Vera's pavilion at the 2016 Venice Architecture Biennale."
 date: 2016-01-01
+cover: ../../assets/projects/bienal_2016.jpg
 tags: [design]
 featured: false
 year: 2016
@@ -9,6 +10,8 @@ location: "Venice, Italy — Biennale di Venezia"
 collaborators: ["Felipe Vera", "Rahul Mehrotra", "UAI DesignLab"]
 status: published
 ---
+
+*Fotografía de portada: © Laurian Ghinitoiu, vía [ArchDaily](https://www.archdaily.cl/cl/789107/pabellon-ephemeral-urbanism-rahul-mehrotra-y-felipe-vera-en-la-bienal-de-venecia-2016).*
 
 ## Overview
 

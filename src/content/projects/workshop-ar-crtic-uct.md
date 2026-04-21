@@ -2,6 +2,7 @@
 title: "AR Filter Workshop — CRT+IC × UCT"
 description: "One-week augmented reality workshop at Universidad Católica de Temuco in collaboration with CRT+IC — teaching methodologies and tools for creating Instagram filters, culminating in a project exhibited at the university."
 date: 2021-01-01
+cover: ../../assets/projects/workshop_uct.jpg
 tags: [design]
 featured: false
 year: 2021
