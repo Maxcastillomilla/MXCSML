@@ -2,6 +2,7 @@
 title: "Disassembly & Reassembly — Spatial AI Brick Sorting — IAAC MRAC"
 description: "Reclaimed bricks classified by color and damage score, sorted into a gradient-based layout, and reassembled into a tower by a Universal Robots arm guided by AI-generated placement instructions."
 date: 2026-03-24
+cover: ../../assets/projects/brick.jpg
 tags: [fabrication, robotics, design]
 featured: false
 year: 2026

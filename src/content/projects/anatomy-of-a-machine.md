@@ -2,6 +2,7 @@
 title: "Anatomy of a Machine: Spill — IAAC MRAC"
 description: "Custom end effector for a large-scale ABB robot — Arduino-controlled stepper motors drive a 1-litre syringe loaded with black paint to trace robotic paths onto canvas."
 date: 2025-12-22
+cover: ../../assets/projects/anatomu-oaf-a-machine-spill.jpg
 tags: [fabrication, robotics, design]
 featured: false
 year: 2025

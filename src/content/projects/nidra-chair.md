@@ -2,6 +2,7 @@
 title: "Nidra Chair — IAAC MRAC×MAEB Workshop"
 description: "Robotic milling of an organic wooden chair — SubD geometry with dragon-scale texture milled in patches using a KUKA arm at IAAC's Valdaura lab."
 date: 2025-11-01
+cover: ../../assets/projects/nidra_chair.png
 tags: [fabrication, robotics, design]
 featured: false
 year: 2025

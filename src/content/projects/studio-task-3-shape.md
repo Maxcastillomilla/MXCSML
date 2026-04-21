@@ -2,6 +2,7 @@
 title: "Studio Task 3: Shape — Impact Printing — IAAC MRAC"
 description: "Two-and-a-half week research exploration of impact printing — clay pellets fired at high velocity through a piston attached to an ABB robot, building up material layer by layer."
 date: 2025-12-24
+cover: ../../assets/projects/impact_printing.jpeg
 tags: [fabrication, robotics, design]
 featured: false
 year: 2025

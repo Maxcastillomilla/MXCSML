@@ -2,6 +2,7 @@
 title: "Medo 2.0"
 description: "Parametric bench design system for Arauco's Innovation Department — web-editable surfaces via ShapeDiver, scaled up to robotic TPU fabrication with a KUKA arm at FabLab UAI."
 date: 2020-01-01
+cover: ../../assets/projects/medo_2.png
 tags: [fabrication, design]
 featured: true
 year: 2020

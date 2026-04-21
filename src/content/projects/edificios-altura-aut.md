@@ -2,6 +2,7 @@
 title: "Edificios en Altura VR — UAT MetaLab"
 description: "Multiplayer VR simulation exploring seismic behavior, materials, and building codes in high-rise architecture, developed with Oculus Quest and PC."
 date: 2024-01-01
+cover: ../../assets/projects/altura_vr.png
 tags: [unreal, design]
 featured: true
 year: 2024

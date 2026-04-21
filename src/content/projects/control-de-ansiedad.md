@@ -2,6 +2,7 @@
 title: "Control de Ansiedad — Joystick Skin — M84.latam × Mindy"
 description: "Accessory skin for gaming joysticks with reflexology-inspired textures and pressure points, designed to help players recognize and regulate anxiety, frustration, and anger in real time."
 date: 2025-01-01
+cover: ../../assets/projects/mindy_control.jpg
 tags: [design, fabrication]
 featured: false
 year: 2025

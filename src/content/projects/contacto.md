@@ -2,6 +2,7 @@
 title: "Contacto"
 description: "Undergraduate thesis investigating sexuality and disability in Chile — culminating in a parametric therapeutic glove with temperature-controlled gel chambers for people with spinal cord injuries."
 date: 2020-01-01
+cover: ../../assets/projects/contacto.png
 tags: [fabrication, design]
 featured: false
 year: 2020

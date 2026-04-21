@@ -2,6 +2,7 @@
 title: "Knitting Structure"
 description: "Tension-based structural system derived from primitive geometric volumes connected by knitted wool elements, simulated in Kangaroo and prototyped at 1:25 scale."
 date: 2017-06-01
+cover: ../../assets/projects/estructura_de_lana.png
 tags: [fabrication, design]
 featured: true
 year: 2017

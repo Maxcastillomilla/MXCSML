@@ -2,6 +2,7 @@
 title: "Y lo mismo es fractal — Museo Virtual — PUC"
 description: "Three.js virtual museum for the interdisciplinary exhibition Y lo mismo es fractal — uniting visual arts, poetry and mathematics at Pontificia Universidad Católica de Chile, themed entirely around fractals."
 date: 2022-10-01
+cover: ../../assets/projects/ylomismoesfractal.png
 tags: [design]
 featured: false
 year: 2022
