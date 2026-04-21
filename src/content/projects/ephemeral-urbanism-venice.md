@@ -19,6 +19,8 @@ A small but significant contribution to the pavilion *Ephemeral Urbanism*, curat
 
 The course at Universidad Adolfo Ibáñez, led by Felipe Vera and Jannett Sordi, focused on researching and mapping these ephemeral urban phenomena. Working from over 600 global case studies across seven thematic categories — religious, celebratory, transactional, extractive, military, refuge, and disaster — the course produced data-driven analysis of how temporary cities form, grow, and dissolve.
 
+![alt text](copyright_laurian_ghinitoiu_chile_in_venice_(8_of_13).jpg)
+
 ## Contribution
 
 The research and data gathered during the course were used to project models onto maps — visualizing patterns of change and indicators of ephemeral settlement across different contexts. This work was subsequently incorporated as part of the projections shown within the Venice pavilion alongside contributions from other students and collaborators from Harvard GSD and UAI DesignLab.

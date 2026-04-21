@@ -13,6 +13,8 @@ status: published
 
 ## Overview
 
+<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;margin:1.5rem 0;"><iframe src="https://www.youtube.com/embed/Azh9Lf3xL8c" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen loading="lazy"></iframe></div>
+
 A Three.js virtual museum built for *Y lo mismo es fractal*, an interdisciplinary exhibition developed at Pontificia Universidad Católica de Chile, bringing together the Faculties of Letters, Arts, and Mathematics around a single theme: fractals as a model of observation of reality.
 
 The museum was accessible at ylomismoesfractal.cl and served as the digital home of an exhibition that treated fractals not as a purely mathematical object, but as a nexus connecting visual art, poetic expression, and scientific thought. The site architecture, navigation, and visual language were designed to reflect the fractal theme itself.

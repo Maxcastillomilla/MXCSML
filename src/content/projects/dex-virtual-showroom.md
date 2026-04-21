@@ -26,6 +26,8 @@ The showroom was structured as a navigable museum with distinct zones:
 - **360° video gallery** — immersive footage embedded within the virtual space for documentary context
 - **Video gallery** — curated product and process videos accessible in-world
 
+![alt text](image-5.png)
+
 ## Role & Tools
 
 - Unreal Engine 5 — environment design, product visualization, gallery logic

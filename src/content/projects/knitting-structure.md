@@ -16,6 +16,8 @@ Developed as a semester project in 2017, Knitting Structure investigates how str
 
 The starting point was a vocabulary of three primitive solids: **cube, pyramid, and parallelepiped** (elongated rectangular prism). By tying their extremities together and applying tension through the knitted wool connections, the combined system achieves structural stability through the balance of opposing forces — similar in principle to a tensegrity structure.
 
+![alt text](image-11.png)
+
 ## Simulation
 
 Kangaroo Physics (Grasshopper) was central to the design process. Each wool element was modeled as a simulated fiber under tension, allowing the team to explore how different connection configurations and tightening sequences produced distinct spatial and structural outcomes before committing to physical fabrication.
@@ -23,6 +25,8 @@ Kangaroo Physics (Grasshopper) was central to the design process. Each wool elem
 The digital model served as both a design tool and a predictive prototype — the simulated geometry closely matched the behavior of the physical version.
 
 ## Fabrication
+
+![alt text](image-13.png)
 
 The knitted wool elements were produced through two complementary methods:
 
@@ -32,5 +36,7 @@ The knitted wool elements were produced through two complementary methods:
 Once assembled and tensioned, **resin** was applied to the junctions and key structural nodes to fix the geometry and preserve the tensioned form permanently. The resin hardened the wool at the connection points while leaving the spans flexible, creating a hybrid material system — rigid at joints, elastic in between.
 
 ## Prototype
+
+![alt text](image-12.png)
 
 A physical prototype was fabricated at **1:25 scale**, demonstrating the full structural logic of the system: primitive volumes, knotted and resin-fixed junctions, and the emergent tension geometry produced by the assembly rules.

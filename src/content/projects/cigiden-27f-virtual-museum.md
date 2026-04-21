@@ -16,6 +16,7 @@ On February 27, 2010, Chile was struck by one of the most powerful earthquakes e
 
 With COVID-19 canceling all in-person exhibitions, the project became **¡Chile: Territorio en Movimiento!** — a downloadable virtual museum built in Unreal Engine combining scientific simulation with game-like mechanics, designed specifically for student audiences.
 
+![alt text](image.png)
 ## Experience Design
 
 The museum recreated computational simulations projected over scaled 3D terrain models of three Chilean locations: **Antofagasta, Valparaíso, and Villarrica** — each chosen for their exposure to distinct hazard types.
@@ -28,6 +29,8 @@ Visitors could explore and interact with:
 - **Landslide (aluvión) events** — slope failure and debris flow visualizations
 - **Avatars, videos and audio** — documentary content keeping the experience narrative-driven
 - **Secret zone** — unlocked only after visiting all exhibition rooms, rewarding full exploration
+
+![alt text](image-1.png)
 
 ## Role & Tools
 

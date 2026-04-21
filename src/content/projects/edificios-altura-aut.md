@@ -16,6 +16,8 @@ Developed in collaboration with MetaLab — the innovation and digital fabricati
 
 The goal was to translate complex structural concepts — typically communicated through static documents and 2D drawings — into an immersive, navigable experience that students and professionals could explore in real time.
 
+![alt text](image-6.png)
+
 ## Experience Design
 
 The simulation was structured as a multi-room walkthrough with distinct stations, each covering a specific dimension of high-rise architecture:

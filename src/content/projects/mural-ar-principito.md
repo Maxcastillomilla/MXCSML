@@ -19,9 +19,13 @@ The project centered on a street mural of *El Principito* (The Little Prince), p
 
 The filter was published on Instagram and Facebook through the Culturas Ñuble account, making the experience publicly accessible to anyone visiting or passing by the mural at its permanent location on Calle Alcalde Iván Ulriksen con pasaje Hernán Saint-Exupéry.
 
+![alt text](image-18.png)
+
 ## Context
 
 The initiative was driven by the Secretaría de Economía Creativa de Ñuble and CRT+IC (Centro para la Revolución Tecnológica en Industrias Creativas), as part of a broader effort to bring AR technology into public cultural spaces in the region. Described by CRT+IC director Isidora Cabezón as "tremendamente innovador" for the region — the first AR mural of its kind in Ñuble.
+
+![alt text](image-19.png)
 
 ## Role & Tools
 

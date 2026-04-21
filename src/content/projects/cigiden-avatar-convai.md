@@ -7,6 +7,7 @@ tags: [unreal]
 featured: true
 year: 2025
 location: "Valparaíso, Chile — CIGIDEN"
+collaborators: ["Juan Cristobal Karich"]
 status: published
 ---
 
@@ -26,6 +27,8 @@ The avatar was embedded in a live projection mapping installation projected over
 ## Significance
 
 This project sits at the intersection of scientific outreach, spatial computing, and conversational AI — demonstrating how disaster risk communication can become embodied, dialogic, and site-specific rather than passive and screen-based.
+
+![alt text](pre.jpg)
 
 ## Role & Tools
 
