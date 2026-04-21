@@ -1,5 +1,5 @@
 ---
-title: "Human Trace — Autonomous Single-Stroke Robotic Sketching — IAAC MAEB"
+title: "Human Trace — Autonomous Single-Stroke Robotic Sketching"
 description: "Python pipeline captures a face via webcam, processes edges with OpenCV, and generates a single continuous robotic stroke — translating a person's likeness into a physical drawing via ABB robot."
 date: 2026-04-03
 cover: ../../assets/projects/drawing_robot.png
