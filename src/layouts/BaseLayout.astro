@@ -120,17 +120,15 @@ const { title, description = 'Computational design researcher and architect.' } 
   </style>
 
   <script>
-    // ── Loader: scramble mientras carga, sale al disparar window.load ──────────
-    // Solo se muestra en la carga inicial de la página (no en View Transitions).
-    // El efecto scramble reemplaza los chars de "MXCSML" con caracteres random
-    // a 60fps para transmitir que algo está pasando.
+    // ── Loader: scramble mientras carga, sale cuando el hero está listo o a los 3s ──
+    // Sale en la condición que ocurra primero:
+    //   1. La textura del hero de Three.js terminó de cargar (hero-texture-loaded)
+    //   2. Pasaron 3 segundos como máximo
 
     const ORIGINAL   = 'MXCSML';
     const GLITCH_SET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ█▓▒░▄▀■';
     let   rafId: number;
-    let   exited      = false;
-    let   pageLoaded  = false;  // window.load disparó
-    let   textureReady = false; // textura de Three.js lista (o página sin hero)
+    let   exited = false;
 
     function randChar(): string {
       return GLITCH_SET[Math.floor(Math.random() * GLITCH_SET.length)];
@@ -161,32 +159,13 @@ const { title, description = 'Computational design researcher and architect.' } 
       }, 350);
     }
 
-    // Solo salir cuando AMBAS condiciones estén listas
-    function checkReady() {
-      if (pageLoaded && textureReady) exitLoader();
-    }
-
     scrambleLoop();
 
-    // Condición 1: página HTML + recursos estáticos cargados
-    window.addEventListener('load', () => {
-      pageLoaded = true;
-      // Si esta página no tiene canvas de Three.js (ej: página de proyecto),
-      // la textura no va a disparar — se marca como lista directamente
-      if (!document.getElementById('hero-canvas')) {
-        textureReady = true;
-      }
-      checkReady();
-    });
+    // Sale cuando la textura del hero está lista
+    window.addEventListener('hero-texture-loaded', exitLoader);
 
-    // Condición 2: textura de perfil.png lista en Three.js
-    window.addEventListener('hero-texture-loaded', () => {
-      textureReady = true;
-      checkReady();
-    });
-
-    // Seguridad: salir máximo a los 8 segundos aunque algo falle
-    setTimeout(exitLoader, 8000);
+    // Máximo 3 segundos, independiente de si hay hero o no
+    setTimeout(exitLoader, 3000);
   </script>
 
   <Navbar />

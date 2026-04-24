@@ -19,6 +19,8 @@ A Three.js virtual museum built for *Y lo mismo es fractal*, an interdisciplinar
 
 The museum was accessible at ylomismoesfractal.cl and served as the digital home of an exhibition that treated fractals not as a purely mathematical object, but as a nexus connecting visual art, poetic expression, and scientific thought. The site architecture, navigation, and visual language were designed to reflect the fractal theme itself.
 
+![alt text](y-lo-mismo-es-fractal/Captura_de_pantalla_2025-05-19_230432_waifu2x_art_noise3_scale.png)
+
 ## Exhibition
 
 *Y lo mismo es fractal* was an initiative of the Red de Divulgación Matemáticas Chile (DIMAT), part of a broader effort to bring mathematics into cultural and creative discourse. The three participating faculties contributed works and perspectives from their disciplines, unified by the fractal as a shared conceptual framework.
